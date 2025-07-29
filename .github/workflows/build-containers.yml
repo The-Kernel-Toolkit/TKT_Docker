@@ -34,4 +34,4 @@ jobs:
           context: .
           file: ${{ matrix.distro }}.Dockerfile
           push: true
-          tags: ghcr.io/etjakeoc/tkt-${{ matrix.distro }}-dev:latest
+          tags: ghcr.io/the-kernel-toolkit/tkt-${{ matrix.distro }}-dev:latest
