@@ -1,8 +1,10 @@
-FROM debian:sid
+FROM debian:sid AS root
 
-# Replace sources.list with full Sid repos: main + contrib + non-free + non-free-firmware
-RUN rm -rf /etc/apt/sources.list /etc/apt/sources.list.d
-RUN echo "deb http://deb.debian.org/debian sid main contrib non-free non-free-firmware" > /etc/apt/sources.list
+# Copy our files
+COPY distro-files/debian/etc/environment /etc/evironment
+COPY distro-files/debian/etc/profile /etc/profile
+COPY distro-files/debian/etc/shells /etc/shells
+COPY distro-files/debian/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
 
 # Base system & dev tools
 RUN apt-get update && apt-get upgrade -y && \

@@ -1,0 +1,5 @@
+deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular main universe multiverse restricted
+deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular-backports main universe multiverse restricted
+deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular-updates main universe multiverse restricted
+deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular-proposed main universe multiverse restricted
+deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular-security main universe multiverse restricted

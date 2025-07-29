@@ -1,0 +1,5 @@
+deb [trusted=yes] http://mirror.mit.edu/ubuntu plucky main universe multiverse restricted
+deb [trusted=yes] http://mirror.mit.edu/ubuntu plucky-backports main universe multiverse restricted
+deb [trusted=yes] http://mirror.mit.edu/ubuntu plucky-updates main universe multiverse restricted
+deb [trusted=yes] http://mirror.mit.edu/ubuntu plucky-proposed main universe multiverse restricted
+deb [trusted=yes] http://mirror.mit.edu/ubuntu plucky-security main universe multiverse restricted

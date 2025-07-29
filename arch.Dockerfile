@@ -15,6 +15,10 @@ RUN rm -rf /etc/pacman.d/mirrorlist
 RUN echo "Server = rsync://mirrors.kernel.org/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
 RUN echo "Server = http://arch.mirror.constant.com/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
 
+COPY distro-files/arch/etc/environment /etc/environment
+COPY distro-files/arch/etc/profile /etc/profile
+COPY distro-files/arch/etc/shells /etc/shells
+
 RUN ldconfig && \
     sed -i '/BUILD_ID/a VERSION_ID=20250720.0.386825' /etc/os-release
 

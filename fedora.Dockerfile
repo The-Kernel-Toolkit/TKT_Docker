@@ -1,4 +1,9 @@
-FROM fedora:latest
+FROM fedora:latest AS root
+
+# Copy our files
+COPY distro-files/fedora/etc/environment /etc/evironment
+COPY distro-files/fedora/etc/profile /etc/profile
+COPY distro-files/fedora/etc/shells /etc/shells
 
 # Update dnf and get tools
 RUN dnf upgrade --assumeyes

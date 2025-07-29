@@ -1,28 +1,19 @@
-FROM ubuntu:latest
+FROM ubuntu:oracular AS root
 
-# Linux Mint's base repos match Ubuntu's version, so 22.04 = Mint 21.x
-# We'll fake it by adding Mint's repo + key
+# Copy our files
+COPY distro-files/mint/etc/environment /etc/evironment
+COPY distro-files/mint/etc/profile /etc/profile
+COPY distro-files/mint/etc/shells /etc/shells
 
 # Add Mint repo + keyring
-RUN apt-get update && \
-    apt-get install -y wget gnupg lsb-release
+RUN apt-get update
+RUN apt-get install -y wget gnupg lsb-release
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A6616109451BBBF2
 
-RUN echo "DISTRIB_ID=LinuxMint" > /etc/lsb-release && \
-    echo "DISTRIB_RELEASE=22" >> /etc/lsb-release && \
-    echo "DISTRIB_CODENAME=zara" >> /etc/lsb-release && \
-    echo "DISTRIB_DESCRIPTION=\"Linux Mint 22 Zara\"" >> /etc/lsb-release
-
-RUN echo "NAME=\"Linux Mint\"" > /etc/os-release && \
-    echo "VERSION=\"22 (Zara)\"" >> /etc/os-release && \
-    echo "ID=linuxmint" >> /etc/os-release && \
-    echo "ID_LIKE=ubuntu" >> /etc/os-release && \
-    echo "PRETTY_NAME=\"Linux Mint 22\"" >> /etc/os-release && \
-    echo "VERSION_ID=\"22\"" >> /etc/os-release && \
-    echo "UBUNTU_CODENAME=jammy" >> /etc/os-release
-
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A6616109451BBBF2 \
- && echo "deb http://packages.linuxmint.com zara main upstream import backport" > /etc/apt/sources.list.d/mint.list \
- && apt-get update
+# Copy our "Mint distro files"
+COPY distro-files/mint/etc/lsb-release /etc/lsb-release
+COPY distro-files/mint/etc/os-release /etc/os-release
+COPY distro-files/mint/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
 
 # Install Mint base bits + build tools
 RUN apt-get install -y \

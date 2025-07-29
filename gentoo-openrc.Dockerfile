@@ -1,22 +1,14 @@
-FROM gentoo/stage3:latest
+FROM gentoo/stage3:latest AS root
 
-# Modern Gentoo wants /etc/portage/package.use as a dir, not a file
-RUN mkdir -p /etc/portage/package.use /etc/portage/package.accept_keywords
+# Copy our files
+COPY distro-files/gentoo-openrc/etc/environment /etc/environment
+COPY distro-files/gentoo-openrc/etc/profile /etc/profile
+COPY distro-files/gentoo-openrc/etc/shells /etc/shells
+COPY distro-files/gentoo-openrc/etc/portage/make.conf /etc/portage/make.conf
+COPY distro-files/gentoo-openrc/etc/portage/package.accept_keywords/tkt /etc/portage/package.accept_keywords/tkt
+COPY distro-files/gentoo-openrc/etc/portage/package.use/tkt /etc/portage/package.use/tkt
 
-# Set USE flags
-RUN echo 'sys-kernel/installkernel dracut' >> /etc/portage/package.use/installkernel
-RUN echo 'dev-libs/openssl ~amd64' >> /etc/portage/package.accept_keywords/tkt
-RUN echo "media-libs/libglvnd X" > /etc/portage/package.use/libglvnd
-RUN echo "x11-libs/libxkbcommon X" >> /etc/portage/package.use/libxkbcommon
-
-RUN echo 'FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox"' >> /etc/portage/make.conf
-RUN echo 'USE="-cxx minimal"' >> /etc/portage/make.conf
-
-# Enable binpkg fetch, ccache
-ENV FEATURES="ccache getbinpkg"
-
-# Binhost
-ENV PORTAGE_BINHOST="https://distfiles.gentoo.org/releases/amd64/binpackages/23.0/x86-64"
+# Binhost gpg key fetch
 RUN getuto
 
 # Sync tree and set profile

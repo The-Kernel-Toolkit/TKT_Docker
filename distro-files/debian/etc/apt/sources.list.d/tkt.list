@@ -1,0 +1,8 @@
+deb http://deb.debian.org/debian trixie main contrib non-free non-free-firmware
+deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware
+deb http://deb.debian.org/debian trixie-proposed-updates main contrib non-free non-free-firmware
+deb http://deb.debian.org/debian trixie-updates main contrib non-free non-free-firmware
+deb http://deb.debian.org/debian testing main contrib non-free non-free-firmware
+deb http://deb.debian.org/debian testing-backports main contrib non-free non-free-firmware
+deb http://deb.debian.org/debian testing-proposed-updates main contrib non-free non-free-firmware
+deb http://deb.debian.org/debian testing-updates main contrib non-free non-free-firmware

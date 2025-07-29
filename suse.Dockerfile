@@ -1,4 +1,9 @@
-FROM opensuse/tumbleweed:latest
+FROM opensuse/tumbleweed:latest AS root
+
+# Copy our files
+COPY distro-files/suse/etc/environment /etc/evironment
+COPY distro-files/suse/etc/profile /etc/profile
+COPY distro-files/suse/etc/shells /etc/shells
 
 # Refresh + dist-upgrade for latest packages
 RUN zypper --non-interactive refresh && \
