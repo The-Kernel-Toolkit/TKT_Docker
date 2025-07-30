@@ -7,6 +7,7 @@ COPY distro-files/ubuntu/etc/profile /etc/profile
 COPY distro-files/ubuntu/etc/shells /etc/shells
 COPY distro-files/ubuntu/etc/apt/sources.list.d/plucky.list /etc/apt/sources.list.d/plucky.list
 COPY distro-files/ubuntu/etc/apt/sources.list.d/oracular.list /etc/apt/sources.list.d/oracular.list
+COPY distro-files/ubuntu/GHCI.cfg /GHCI.cfg
 
 # Update the repo database and upgrade packages
 RUN apt-get update

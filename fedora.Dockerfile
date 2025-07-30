@@ -4,6 +4,7 @@ FROM fedora:latest AS root
 COPY distro-files/fedora/etc/environment /etc/evironment
 COPY distro-files/fedora/etc/profile /etc/profile
 COPY distro-files/fedora/etc/shells /etc/shells
+COPY distro-files/fedora/GHCI.cfg /GHCI.cfg
 
 # Update dnf and get tools
 RUN dnf upgrade --assumeyes

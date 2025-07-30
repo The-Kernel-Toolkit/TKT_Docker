@@ -5,6 +5,7 @@ COPY distro-files/void/etc/environment /etc/evironment
 COPY distro-files/void/etc/profile /etc/profile
 COPY distro-files/void/etc/shells /etc/shells
 COPY distro-files/void//etc/xbps.d/00-repository-main.conf /etc/xbps.d/00-repository-main.conf
+COPY distro-files/void/GHCI.cfg /GHCI.cfg
 
 # Sync base system and certs
 RUN xbps-install -Suy xbps && \

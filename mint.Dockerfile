@@ -4,6 +4,7 @@ FROM ubuntu:oracular AS root
 COPY distro-files/mint/etc/environment /etc/evironment
 COPY distro-files/mint/etc/profile /etc/profile
 COPY distro-files/mint/etc/shells /etc/shells
+COPY distro-files/mint/GHCI.cfg /GHCI.cfg
 
 # Add Mint repo + keyring
 RUN apt-get update

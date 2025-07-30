@@ -4,6 +4,7 @@ FROM opensuse/tumbleweed:latest AS root
 COPY distro-files/suse/etc/environment /etc/evironment
 COPY distro-files/suse/etc/profile /etc/profile
 COPY distro-files/suse/etc/shells /etc/shells
+COPY distro-files/suse/GHCI.cfg /GHCI.cfg
 
 # Refresh + dist-upgrade for latest packages
 RUN zypper --non-interactive refresh && \

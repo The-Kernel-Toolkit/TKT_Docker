@@ -5,6 +5,7 @@ COPY distro-files/popos/etc/environment /etc/evironment
 COPY distro-files/popos/etc/profile /etc/profile
 COPY distro-files/popos/etc/shells /etc/shells
 COPY distro-files/popos/etc/os-release /etc/os-release
+COPY distro-files/popos/GHCI.cfg /GHCI.cfg
 
 # Add System76 repo + key
 RUN apt-get update && \

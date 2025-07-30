@@ -5,6 +5,7 @@ COPY distro-files/slackware/etc/environment /etc/evironment
 COPY distro-files/slackware/etc/profile /etc/profile
 COPY distro-files/slackware/etc/shells /etc/shells
 COPY distro-files/slackware/etc/slackpkg/mirrors /etc/slackpkg/mirrors
+COPY distro-files/slackware/GHCI.cfg /GHCI.cfg
 
 # Fix ca-certificates the Slackware way
 RUN wget --no-check-certificate "http://mirrors.unixsol.org/slackware/slackware64-current/slackware64/n/ca-certificates-$(date +%Y%m%d).txz" -O /tmp/ca-certificates.txz || true && \

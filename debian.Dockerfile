@@ -5,6 +5,7 @@ COPY distro-files/debian/etc/environment /etc/evironment
 COPY distro-files/debian/etc/profile /etc/profile
 COPY distro-files/debian/etc/shells /etc/shells
 COPY distro-files/debian/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
+COPY distro-files/debian/GHCI.cfg /GHCI.cfg
 
 # Base system & dev tools
 RUN apt-get update && apt-get upgrade -y && \

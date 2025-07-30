@@ -7,6 +7,7 @@ COPY distro-files/gentoo-openrc/etc/shells /etc/shells
 COPY distro-files/gentoo-openrc/etc/portage/make.conf /etc/portage/make.conf
 COPY distro-files/gentoo-openrc/etc/portage/package.accept_keywords/tkt /etc/portage/package.accept_keywords/tkt
 COPY distro-files/gentoo-openrc/etc/portage/package.use/tkt /etc/portage/package.use/tkt
+COPY distro-files/gentoo-openrc/GHCI.cfg /GHCI.cfg
 
 # Binhost gpg key fetch
 RUN getuto

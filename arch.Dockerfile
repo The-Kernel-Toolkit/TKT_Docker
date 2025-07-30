@@ -18,6 +18,7 @@ RUN echo "Server = http://arch.mirror.constant.com/\$repo/os/\$arch" >> /etc/pac
 COPY distro-files/arch/etc/environment /etc/environment
 COPY distro-files/arch/etc/profile /etc/profile
 COPY distro-files/arch/etc/shells /etc/shells
+COPY distro-files/arch/GHCI.cfg /GHCI.cfg
 
 RUN ldconfig && \
     sed -i '/BUILD_ID/a VERSION_ID=20250720.0.386825' /etc/os-release
