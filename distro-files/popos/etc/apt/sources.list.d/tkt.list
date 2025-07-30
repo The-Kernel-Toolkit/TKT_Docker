@@ -1,0 +1,15 @@
+# Pop!_OS official repositories
+deb     http://apt.pop-os.org/release        jammy main
+deb     http://apt.pop-os.org/proprietary    jammy main
+deb     http://apt.pop-os.org/release-ubuntu  jammy main
+
+# Development / testing branches
+deb [arch=amd64] http://apt.pop-os.org/staging/master       jammy main
+deb     http://apt.pop-os.org/staging-proprietary           jammy main
+deb     http://apt.pop-os.org/staging-ubuntu/master         jammy main
+
+# Ubuntu mirror components (jammy based on your OS release)
+deb     http://apt.pop-os.org/ubuntu         jammy main multiverse restricted universe
+deb     http://apt.pop-os.org/ubuntu         jammy-security main multiverse restricted universe
+deb     http://apt.pop-os.org/ubuntu         jammy-updates  main multiverse restricted universe
+deb     http://apt.pop-os.org/ubuntu         jammy-backports main multiverse restricted universe

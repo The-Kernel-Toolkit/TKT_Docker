@@ -1,12 +1,13 @@
-FROM aclemons/slackware:current
+FROM aclemons/slackware:current AS root
 
-# Set the mirror
-ENV SLACK_MIRROR="http://mirrors.unixsol.org/slackware/slackware64-current/"
+# Copy our files
+COPY distro-files/slackware/etc/environment /etc/evironment
+COPY distro-files/slackware/etc/profile /etc/profile
+COPY distro-files/slackware/etc/shells /etc/shells
+COPY distro-files/slackware/etc/slackpkg/mirrors /etc/slackpkg/mirrors
 
 # Fix ca-certificates the Slackware way
-RUN mkdir -p /etc/slackpkg && \
-    echo "${SLACK_MIRROR}" > /etc/slackpkg/mirrors && \
-    wget --no-check-certificate "${SLACK_MIRROR}slackware64/n/ca-certificates-$(date +%Y%m%d).txz" -O /tmp/ca-certificates.txz || true && \
+RUN wget --no-check-certificate "http://mirrors.unixsol.org/slackware/slackware64-current/slackware64/n/ca-certificates-$(date +%Y%m%d).txz" -O /tmp/ca-certificates.txz || true && \
     installpkg /tmp/ca-certificates.txz || true && \
     slackpkg update gpg && \
     slackpkg update

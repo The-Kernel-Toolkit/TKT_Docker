@@ -1,8 +1,10 @@
-FROM voidlinux/voidlinux:latest
+FROM voidlinux/voidlinux:latest AS root
 
-# Point to official Void repo
-RUN rm -rf /etc/xbps.d/* && \
-    echo "repository=https://repo-default.voidlinux.org/current" > /etc/xbps.d/00-repository-main.conf
+# Copy our files
+COPY distro-files/void/etc/environment /etc/evironment
+COPY distro-files/void/etc/profile /etc/profile
+COPY distro-files/void/etc/shells /etc/shells
+COPY distro-files/void//etc/xbps.d/00-repository-main.conf /etc/xbps.d/00-repository-main.conf
 
 # Sync base system and certs
 RUN xbps-install -Suy xbps && \

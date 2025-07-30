@@ -1,0 +1,5 @@
+_distro="Mint"
+_IS_GHCI="true"
+KCFLAGS="$KCFLAGS -Wno-error -Wno-unused-command-line-argument"
+KCPPFLAGS="$KCPPFLAGS -Wno-error -Wno-unused-command-line-argument"
+KCXXFLAGS="$KCXXFLAGS -Wno-error -Wno-unused-command-line-argument"
