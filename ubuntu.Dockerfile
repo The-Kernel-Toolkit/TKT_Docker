@@ -1,12 +1,12 @@
-FROM ubuntu:latest
+FROM ubuntu:oracular
 
 # Update + install all build deps at build time
-RUN apt-get update && apt-get install -y software-properties-common
-RUN add-apt-repository main
-RUN add-apt-repository universe
-RUN add-apt-repository multiverse
-RUN add-apt-repository restricted
-RUN echo "deb [trusted=yes] http://mirror.mit.edu/ubuntu plucky main universe multiverse restricted" | tee /etc/apt/sources.list.d/plucky.list
+RUN rm -rf /etc/apt/sources.list* && mkdir /etc/apt/sources.list.d
+RUN echo "deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular main universe multiverse restricted" | tee /etc/apt/sources.list.d/mit.edu.list
+RUN echo "deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular-backports main universe multiverse restricted" | tee /etc/apt/sources.list.d/mit.edu.list
+RUN echo "deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular-proposed main universe multiverse restricted" | tee /etc/apt/sources.list.d/mit.edu.list
+RUN echo "deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular-security main universe multiverse restricted" | tee /etc/apt/sources.list.d/mit.edu.list
+RUN echo "deb [trusted=yes] http://mirror.mit.edu/ubuntu oracular-updates main universe multiverse restricted" | tee /etc/apt/sources.list.d/mit.edu.list
 RUN apt-get install -y --no-install-recommends \
       build-essential bc bison flex libssl-dev libelf-dev dwarves \
       git curl wget clang lld llvm clang-tools clang-format clang-tidy \
