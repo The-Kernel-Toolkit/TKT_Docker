@@ -31,10 +31,6 @@ RUN perl-cleaner --all
 # Update portage and emerge packages
 RUN emerge --oneshot portage
 
-# Emerge mirrorselect and save the 3 fastest servers found
-RUN emerge --oneshot app-portage/mirrorselect
-RUN mirrorselect -s3 -t60 >> /etc/portage/make.conf
-
 # Echo the make.conf for debug purposes
 RUN cat /etc/portage/make.conf
 
