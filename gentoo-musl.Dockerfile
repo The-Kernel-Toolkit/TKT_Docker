@@ -8,17 +8,6 @@ COPY distro-files/gentoo-musl/etc/portage/make.conf /etc/portage/make.conf
 COPY distro-files/gentoo-musl/etc/portage/package.accept_keywords/tkt /etc/portage/package.accept_keywords/tkt
 COPY distro-files/gentoo-musl/etc/portage/package.use/tkt /etc/portage/package.use/tkt
 
-# Create TKT user
-COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
-RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
-COPY distro-files/gentoo-musl/etc/passwd /etc/passwd
-COPY distro-files/gentoo-musl/etc/sudoers.d/TKT /etc/sudoers.d/TKT
-COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
-COPY distro-files/gentoo-musl/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
-RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
-COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
-RUN chmod +x /home/TKT/init-tkt.sh
-
 # Binhost gpg key fetch
 RUN getuto
 
@@ -51,20 +40,22 @@ RUN emerge --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --au
       sys-process/tini
 
 # Set environment variables for TKT
-ENV HOME=/home/TKT \
-    USER=TKT
+ENV HOME=/
 
 # Set working directory to user's home
-WORKDIR /home/TKT
+WORKDIR /TKT
 
-# Use the TKT user from this point on
-USER TKT
+COPY distro-files/GHCI.cfg /TKT/.config/TKT.cfg.base
+COPY distro-files/gentoo-musl/GHCI.cfg /TKT/.config/TKT.cfg.distro
+RUN cat /TKT/.config/TKT.cfg.distro /TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
+COPY distro-files/init-tkt.sh /TKT/init-tkt.sh
+RUN chmod +x /TKT/init-tkt.sh
 
 # Setup the TKT repo ahead of time to save a little time
-RUN /home/TKT/init-tkt.sh && rm /home/TKT/init-tkt.sh
+RUN /TKT/init-tkt.sh && rm /TKT/init-tkt.sh
 
 # Set working directory to the TKT repo
-WORKDIR /home/TKT/TKT
+WORKDIR /TKT/TKT
 
 # Final command (login shell)
 ENTRYPOINT ["/usr/bin/tini", "--"]
