@@ -46,4 +46,25 @@ RUN FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --verbose --get
       dev-util/patchutils \
       sys-process/tini
 
-CMD ["/bin/bash"]
+# Set environment variables for TKT
+ENV HOME=/home/TKT \
+    USER=TKT
+
+# Set working directory to user's home
+WORKDIR /home/TKT
+
+# Use the TKT user from this point on
+USER TKT
+
+# Setup the TKT repo ahead of time to save a little time
+RUN /home/TKT/init-tkt.sh && rm /home/TKT/init-tkt.sh
+
+# Set working directory to the TKT repo
+WORKDIR /home/TKT/TKT
+
+# Echo mirrorlist for debug purposes
+RUN cat /etc/pacman.d/mirrorlist
+
+# Final command (login shell)
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["/bin/bash", "-i"]
