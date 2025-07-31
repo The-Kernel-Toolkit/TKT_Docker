@@ -1,25 +1,23 @@
 FROM archlinux:base-devel AS root
-LABEL maintainer="ETJAKEOC@gmail.com"
 
-# Create TKT user
-RUN useradd -m -U -s /bin/bash TKT
-RUN mkdir -p /home/TKT/.config
-RUN chown -R TKT:TKT /home/TKT
-
-# Copy our files
+# Copy our base files
 COPY distro-files/arch/etc/environment /etc/environment
 COPY distro-files/arch/etc/profile /etc/profile
 COPY distro-files/arch/etc/shells /etc/shells
 COPY distro-files/arch/etc/pacman.conf /etc/pacman.conf
 COPY distro-files/arch/etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist
 COPY distro-files/arch/etc/makepkg.conf /etc/makepkg.conf
+COPY distro-files/arch/usr/bin/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+
+# Create TKT user
+COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
+RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
 COPY distro-files/arch/etc/passwd /etc/passwd
 COPY distro-files/arch/etc/sudoers.d/TKT /etc/sudoers.d/TKT
 COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
 COPY distro-files/arch/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
 RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
-COPY distro-files/arch/usr/bin/tini /usr/bin/tini
-RUN chmod +x /usr/bin/tini
 COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
 RUN chmod +x /home/TKT/init-tkt.sh
 
@@ -45,7 +43,7 @@ WORKDIR /home/TKT
 USER TKT
 
 # Setup the TKT repo ahead of time to save a little time
-RUN /home/TKT/init-tkt.sh
+RUN /home/TKT/init-tkt.sh && rm /home/TKT/init-tkt.sh
 
 # Set working directory to the TKT repo
 WORKDIR /home/TKT/TKT
