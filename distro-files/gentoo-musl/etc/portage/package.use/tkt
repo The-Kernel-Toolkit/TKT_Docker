@@ -1,0 +1,3 @@
+sys-kernel/installkernel dracut
+media-libs/libglvnd X
+x11-libs/libxkbcommon X

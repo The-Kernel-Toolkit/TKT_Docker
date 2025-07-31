@@ -1,0 +1,7 @@
+_distro="Gentoo"
+_configfile="OpenRC"
+_IS_GHCI="true"
+KCFLAGS="$KCFLAGS -Wno-error -Wno-unused-command-line-argument"
+KCPPFLAGS="$KCPPFLAGS -Wno-error -Wno-unused-command-line-argument"
+KCXXFLAGS="$KCXXFLAGS -Wno-error -Wno-unused-command-line-argument"
+PORTAGE_BINHOST="https://distfiles.gentoo.org/releases/amd64/binpackages/23.0/x86-64"

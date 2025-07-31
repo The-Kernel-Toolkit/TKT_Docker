@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        distro: [arch, debian, gentoo-openrc, gentoo-systemd, mint, nixos, fedora, popos, slackware, suse, ubuntu, void]
+        distro: [arch, debian, gentoo-musl, gentoo-openrc, gentoo-systemd, mint, nixos, fedora, popos, slackware, suse, ubuntu, void]
 
     steps:
       - uses: actions/checkout@v4
