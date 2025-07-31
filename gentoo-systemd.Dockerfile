@@ -30,7 +30,15 @@ RUN perl-cleaner --all
 
 # Update portage and emerge packages
 RUN emerge --oneshot portage
-RUN FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --autounmask=y --autounmask-continue \
+
+# Emerge mirrorselect and save the 3 fastest servers found
+RUN emerge --oneshot app-portage/mirrorselect
+RUN mirrorselect -s3 >> /etc/portage/make.conf
+
+# Echo the make.conf for debug purposes
+RUN cat /etc/portage/make.conf
+
+RUN emerge --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --autounmask=y --autounmask-continue \
       sys-kernel/gentoo-kernel-bin \
       llvm-core/llvm \
       llvm-core/clang \
@@ -61,9 +69,6 @@ RUN /home/TKT/init-tkt.sh && rm /home/TKT/init-tkt.sh
 
 # Set working directory to the TKT repo
 WORKDIR /home/TKT/TKT
-
-# Echo mirrorlist for debug purposes
-RUN cat /etc/pacman.d/mirrorlist
 
 # Final command (login shell)
 ENTRYPOINT ["/usr/bin/tini", "--"]
