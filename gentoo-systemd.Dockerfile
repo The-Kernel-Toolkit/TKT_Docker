@@ -7,7 +7,17 @@ COPY distro-files/gentoo-systemd/etc/shells /etc/shells
 COPY distro-files/gentoo-systemd/etc/portage/make.conf /etc/portage/make.conf
 COPY distro-files/gentoo-systemd/etc/portage/package.accept_keywords/tkt /etc/portage/package.accept_keywords/tkt
 COPY distro-files/gentoo-systemd/etc/portage/package.use/tkt /etc/portage/package.use/tkt
-COPY distro-files/gentoo-systemd/GHCI.cfg /GHCI.cfg
+
+# Create TKT user
+COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
+RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
+COPY distro-files/gentoo-systemd/etc/passwd /etc/passwd
+COPY distro-files/gentoo-systemd/etc/sudoers.d/TKT /etc/sudoers.d/TKT
+COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
+COPY distro-files/gentoo-systemd/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
+RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
+COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
+RUN chmod +x /home/TKT/init-tkt.sh
 
 # Binhost gpg key fetch
 RUN getuto
@@ -33,6 +43,7 @@ RUN FEATURES="-ipc-sandbox -network-sandbox -pid-sandbox" emerge --verbose --get
       net-misc/curl \
       sys-process/time \
       app-admin/sudo \
-      dev-util/patchutils
+      dev-util/patchutils \
+      sys-process/tini
 
 CMD ["/bin/bash"]
