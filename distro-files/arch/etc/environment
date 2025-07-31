@@ -1,5 +1,7 @@
 _distro="Arch"
 _IS_GHCI="true"
+LANG=C.UTF-8
+LC_ALL=C.UTF-8
 KCFLAGS="$KCFLAGS -Wno-error -Wno-unused-command-line-argument"
 KCPPFLAGS="$KCPPFLAGS -Wno-error -Wno-unused-command-line-argument"
 KCXXFLAGS="$KCXXFLAGS -Wno-error -Wno-unused-command-line-argument"

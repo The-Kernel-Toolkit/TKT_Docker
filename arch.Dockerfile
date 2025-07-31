@@ -1,42 +1,58 @@
-FROM alpine:3.22 AS verify
-
-RUN apk add --no-cache curl tar zstd tini
-RUN curl -sOJL "https://gitlab.archlinux.org/api/v4/projects/10185/packages/generic/rootfs/20250720.0.386825/base-devel-20250720.0.386825.tar.zst"
-RUN echo "8ed2fd0af1b9506f8695352557407598b23fb73ac50d944f306e67b5cfd781fa  base-devel-20250720.0.386825.tar.zst" > /tmp/sha256sums.txt
-RUN sha256sum -c /tmp/sha256sums.txt
-RUN mkdir /rootfs
-RUN tar -C /rootfs --extract --file base-devel-20250720.0.386825.tar.zst
-
-FROM scratch AS root
+FROM archlinux:base-devel AS root
 LABEL maintainer="ETJAKEOC@gmail.com"
-COPY --from=verify /rootfs /
 
-RUN rm -rf /etc/pacman.d/mirrorlist
-RUN echo "Server = rsync://mirrors.kernel.org/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
-RUN echo "Server = http://arch.mirror.constant.com/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+# Create TKT user
+RUN useradd -m -U -s /bin/bash TKT
+RUN mkdir -p /home/TKT/.config
+RUN chown -R TKT:TKT /home/TKT
 
+# Copy our files
 COPY distro-files/arch/etc/environment /etc/environment
 COPY distro-files/arch/etc/profile /etc/profile
 COPY distro-files/arch/etc/shells /etc/shells
-COPY distro-files/arch/GHCI.cfg /GHCI.cfg
+COPY distro-files/arch/etc/pacman.conf /etc/pacman.conf
+COPY distro-files/arch/etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist
+COPY distro-files/arch/etc/makepkg.conf /etc/makepkg.conf
+COPY distro-files/arch/etc/passwd /etc/passwd
+COPY distro-files/arch/etc/sudoers.d/TKT /etc/sudoers.d/TKT
+COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
+COPY distro-files/arch/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
+RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
+COPY distro-files/arch/usr/bin/tini /usr/bin/tini
+RUN chmod +x /usr/bin/tini
+COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
+RUN chmod +x /home/TKT/init-tkt.sh
 
-RUN ldconfig && \
-    sed -i '/BUILD_ID/a VERSION_ID=20250720.0.386825' /etc/os-release
+# Run reflector to speed up repos
+RUN pacman -Syy --needed --noconfirm --asexplicit aria2 curl reflector rsync wget
+RUN reflector --fastest 5 --verbose --protocol rsync,https,http --latest 5 --age 1 --sort rate --save /etc/pacman.d/mirrorlist
 
-ENV LANG=C.UTF-8
+# Update and install base-devel and other needed packages
+RUN pacman -Syu --needed --noconfirm --asexplicit \
+        base-devel bash bc bison ccache clang coreutils cpio docbook-xsl flex gcc gettext git graphviz imagemagick \
+        inetutils initramfs kmod libelf linux-firmware lld llvm mkinitcpio nano pahole patchutils perl python \
+        python-sphinx python-sphinx_rtd_theme python-yaml rust rust-bindgen rust-src schedtool scx-scheds sudo \
+        tar texlive-latexextra time wireless-regdb xmlto xz
 
-RUN pacman -Syy --needed --noconfirm \
-aria2 curl reflector rsync wget
-RUN reflector --fastest 10 --verbose --protocol rsync,https,http --latest 10 --age 1 --sort rate --save /etc/pacman.d/mirrorlist
+# Set environment variables for TKT
+ENV HOME=/home/TKT \
+    USER=TKT
 
-RUN pacman -Syu --needed --noconfirm \
-    base-devel bc bison clang coreutils cpio docbook-xsl flex gcc git \
-    graphviz imagemagick inetutils initramfs kmod libelf lld llvm mkinitcpio pahole \
-    patchutils perl python-sphinx python-sphinx_rtd_theme schedtool sudo \
-    tar xmlto xz
+# Set working directory to user's home
+WORKDIR /home/TKT
 
-FROM root AS final
-LABEL maintainer="ETJAKEOC@gmail.com"
+# Use the TKT user from this point on
+USER TKT
 
-ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["/bin/bash"]
+# Setup the TKT repo ahead of time to save a little time
+RUN /home/TKT/init-tkt.sh
+
+# Set working directory to the TKT repo
+WORKDIR /home/TKT/TKT
+
+# Echo mirrorlist for debug purposes
+RUN cat /etc/pacman.d/mirrorlist
+
+# Final command (login shell)
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["/bin/bash", "-i"]
