@@ -24,7 +24,7 @@ RUN getuto
 
 # Sync tree and set profile
 RUN emerge-webrsync
-RUN eselect profile set 1
+RUN eselect profile set 43
 
 RUN perl-cleaner --all
 
