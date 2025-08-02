@@ -43,10 +43,10 @@ RUN emerge --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --au
 # Create TKT user
 COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
 RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
-COPY distro-files/gentoo-systemd/etc/passwd /etc/passwd
-COPY distro-files/gentoo-systemd/etc/sudoers.d/TKT /etc/sudoers.d/TKT
+COPY distro-files/gentoo-musl/etc/passwd /etc/passwd
+COPY distro-files/gentoo-musl/etc/sudoers.d/TKT /etc/sudoers.d/TKT
 COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
-COPY distro-files/gentoo-systemd/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
+COPY distro-files/gentoo-musl/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
 RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
 COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
 RUN chmod +x /home/TKT/init-tkt.sh
@@ -56,6 +56,9 @@ ENV HOME=/
 
 # Set working directory to user's home
 WORKDIR /home/TKT
+
+# Use the TKT user from this point on
+USER TKT
 
 # Setup the TKT repo ahead of time to save a little time
 RUN /home/TKT/init-tkt.sh && rm /home/TKT/init-tkt.sh

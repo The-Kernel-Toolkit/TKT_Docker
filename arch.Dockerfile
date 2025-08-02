@@ -28,7 +28,7 @@ RUN reflector --fastest 5 --verbose --protocol rsync,https,http --latest 5 --age
 
 # Update and install base-devel and other needed packages
 RUN pacman -Syu --needed --noconfirm --asexplicit \
-        base-devel bash bc bison ccache clang coreutils cpio docbook-xsl flex gcc gettext git graphviz imagemagick \
+        base-devel bash bc binutils bison ccache clang coreutils cpio docbook-xsl flex gcc gettext git graphviz imagemagick \
         inetutils initramfs kmod libelf linux-firmware lld llvm mkinitcpio nano pahole patchutils perl python \
         python-sphinx python-sphinx_rtd_theme python-yaml rust rust-bindgen rust-src schedtool scx-scheds sudo \
         tar texlive-latexextra time wireless-regdb xmlto xz
