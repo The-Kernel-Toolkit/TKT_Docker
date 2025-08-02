@@ -3,7 +3,8 @@ FROM debian:sid AS root
 # Copy our base files
 COPY distro-files/debian/etc/environment /etc/evironment
 COPY distro-files/debian/etc/profile /etc/profile
-COPY distro-files/debian/etc/shells /etc/shells
+COPY distro-files/etc/shells /etc/shells
+COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/debian/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
 COPY distro-files/arch/usr/bin/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini

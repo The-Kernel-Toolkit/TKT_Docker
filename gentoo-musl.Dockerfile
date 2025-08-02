@@ -3,7 +3,8 @@ FROM gentoo/stage3:musl AS root
 # Copy our files
 COPY distro-files/gentoo-musl/etc/environment /etc/environment
 COPY distro-files/gentoo-musl/etc/profile /etc/profile
-COPY distro-files/gentoo-musl/etc/shells /etc/shells
+COPY distro-files/etc/shells /etc/shells
+COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/gentoo-musl/etc/portage/make.conf /etc/portage/make.conf
 COPY distro-files/gentoo-musl/etc/portage/package.accept_keywords/tkt /etc/portage/package.accept_keywords/tkt
 COPY distro-files/gentoo-musl/etc/portage/package.use/tkt /etc/portage/package.use/tkt
@@ -54,13 +55,13 @@ RUN chmod +x /home/TKT/init-tkt.sh
 ENV HOME=/
 
 # Set working directory to user's home
-WORKDIR /TKT
+WORKDIR /home/TKT
 
 # Setup the TKT repo ahead of time to save a little time
-RUN /TKT/init-tkt.sh && rm /TKT/init-tkt.sh
+RUN /home/TKT/init-tkt.sh && rm /home/TKT/init-tkt.sh
 
 # Set working directory to the TKT repo
-WORKDIR /TKT/TKT
+WORKDIR /home/TKT/TKT
 
 # Final command (login shell)
 ENTRYPOINT ["/usr/bin/tini", "--"]

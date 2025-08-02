@@ -3,7 +3,8 @@ FROM fedora:latest AS root
 # Copy our files
 COPY distro-files/fedora/etc/environment /etc/evironment
 COPY distro-files/fedora/etc/profile /etc/profile
-COPY distro-files/fedora/etc/shells /etc/shells
+COPY distro-files/etc/shells /etc/shells
+COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/fedora/GHCI.cfg /GHCI.cfg
 
 # Update dnf and get tools

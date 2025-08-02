@@ -3,7 +3,8 @@ FROM gentoo/stage3:systemd AS root
 # Copy our files
 COPY distro-files/gentoo-systemd/etc/environment /etc/environment
 COPY distro-files/gentoo-systemd/etc/profile /etc/profile
-COPY distro-files/gentoo-systemd/etc/shells /etc/shells
+COPY distro-files/etc/shells /etc/shells
+COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/gentoo-systemd/etc/portage/make.conf /etc/portage/make.conf
 COPY distro-files/gentoo-systemd/etc/portage/package.accept_keywords/tkt /etc/portage/package.accept_keywords/tkt
 COPY distro-files/gentoo-systemd/etc/portage/package.use/tkt /etc/portage/package.use/tkt

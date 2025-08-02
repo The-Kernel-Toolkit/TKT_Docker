@@ -3,7 +3,8 @@ FROM voidlinux/voidlinux:latest AS root
 # Copy our files
 COPY distro-files/void/etc/environment /etc/evironment
 COPY distro-files/void/etc/profile /etc/profile
-COPY distro-files/void/etc/shells /etc/shells
+COPY distro-files/etc/shells /etc/shells
+COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/void//etc/xbps.d/00-repository-main.conf /etc/xbps.d/00-repository-main.conf
 COPY distro-files/void/GHCI.cfg /GHCI.cfg
 
