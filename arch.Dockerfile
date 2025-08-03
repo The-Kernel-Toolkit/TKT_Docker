@@ -15,7 +15,7 @@ RUN chmod +x /usr/bin/tini
 COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
 RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
 COPY distro-files/arch/etc/passwd /etc/passwd
-COPY distro-files/arch/etc/sudoers.d/TKT /etc/sudoers.d/TKT
+COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
 COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
 COPY distro-files/arch/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
 RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg

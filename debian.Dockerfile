@@ -6,14 +6,12 @@ COPY distro-files/debian/etc/profile /etc/profile
 COPY distro-files/etc/shells /etc/shells
 COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/debian/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
-COPY distro-files/arch/usr/bin/tini /usr/bin/tini
-RUN chmod +x /usr/bin/tini
 
 # Create TKT user
 COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
 RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
-COPY distro-files/arch/etc/passwd /etc/passwd
-COPY distro-files/arch/etc/sudoers.d/TKT /etc/sudoers.d/TKT
+COPY distro-files/debian/etc/passwd /etc/passwd
+COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
 COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
 COPY distro-files/debian/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
 RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
@@ -70,9 +68,8 @@ RUN apt-get update && apt-get upgrade -y && \
     libstdc++-14-dev libudev-dev lld llvm lz4 make patchutils perl python3 python3-pip python3-setuptools rsync \
     schedtool sudo tar time tini wget xz-utils zstd
 
-
-# Symlink clang-cpp if needed (older LLVM versions sometimes miss this)
-RUN ln -s /usr/bin/clang /usr/bin/clang-cpp || true
+# Symlink clang-cpp (Distros that don't ship clang-cpp because they're retarded)
+RUN ln -s /usr/bin/clang /usr/bin/clang-cpp
 
 # Clean APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

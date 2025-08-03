@@ -8,6 +8,15 @@ COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/slackware/etc/slackpkg/mirrors /etc/slackpkg/mirrors
 COPY distro-files/slackware/GHCI.cfg /GHCI.cfg
 
+# Create TKT user
+COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
+RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
+COPY distro-files/slackware/etc/passwd /etc/passwd
+COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
+COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
+COPY distro-files/slackware/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
+RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
+
 # Fix ca-certificates the Slackware way
 RUN wget --no-check-certificate "http://mirrors.unixsol.org/slackware/slackware64-current/slackware64/n/ca-certificates-$(date +%Y%m%d).txz" -O /tmp/ca-certificates.txz || true && \
     installpkg /tmp/ca-certificates.txz || true && \
@@ -30,6 +39,16 @@ RUN chmod +x /sbin/tini
 
 # Clean up cache
 RUN rm -rf /var/cache/*
+
+# Set environment variables for TKT
+ENV HOME=/home/TKT \
+    USER=TKT
+
+# Set working directory to user's home
+WORKDIR /home/TKT
+
+# Use the TKT user from this point on
+USER TKT
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/bin/bash"]

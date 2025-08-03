@@ -44,7 +44,7 @@ RUN emerge --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --au
 COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
 RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
 COPY distro-files/gentoo-systemd/etc/passwd /etc/passwd
-COPY distro-files/gentoo-systemd/etc/sudoers.d/TKT /etc/sudoers.d/TKT
+COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
 COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
 COPY distro-files/gentoo-systemd/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
 RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
