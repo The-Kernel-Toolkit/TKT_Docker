@@ -27,6 +27,9 @@ RUN dnf install -y --skip-unavailable \
       elfutils-devel fedora-packager fedpkg pesign numactl-devel openssl-devel-engine perl-devel perl-generators \
       qt5-qtbase-devel
 
+# Wrap clang-cpp because some distros are retarded and ship broken clang stacks
+RUN echo "/usr/bin/clang -E '$@'" >> /usr/bin/clang-cpp && chmod +x /usr/bin/clang-cpp
+
 # Clean up
 RUN dnf clean all
 

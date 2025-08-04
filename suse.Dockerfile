@@ -33,6 +33,9 @@ RUN zypper --non-interactive addrepo --refresh https://download.opensuse.org/rep
 RUN rpm --import https://download.opensuse.org/repositories/devel:/languages:/python/openSUSE_Tumbleweed/repodata/repomd.xml.key
 RUN zypper --gpg-auto-import-keys refresh
 
+# Wrap clang-cpp because some distros are retarded and ship broken clang stacks
+RUN echo "/usr/bin/clang -E '$@'" >> /usr/bin/clang-cpp && chmod +x /usr/bin/clang-cpp
+
 # Clean up cache to reduce layers
 RUN zypper clean -a
 

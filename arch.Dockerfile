@@ -11,17 +11,6 @@ COPY distro-files/arch/etc/makepkg.conf /etc/makepkg.conf
 COPY distro-files/arch/usr/bin/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini
 
-# Create TKT user
-COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
-RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
-COPY distro-files/arch/etc/passwd /etc/passwd
-COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
-COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
-COPY distro-files/arch/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
-RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
-COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
-RUN chmod +x /home/TKT/init-tkt.sh
-
 # Run reflector to speed up repos
 RUN pacman -Syy --needed --noconfirm --asexplicit aria2 curl reflector rsync wget
 RUN reflector --fastest 5 --verbose --protocol rsync,https,http --latest 5 --age 1 --sort rate --save /etc/pacman.d/mirrorlist
@@ -32,6 +21,17 @@ RUN pacman -Syu --needed --noconfirm --asexplicit \
         inetutils initramfs kmod libelf linux-firmware lld llvm mkinitcpio nano pahole patchutils perl python \
         python-sphinx python-sphinx_rtd_theme python-yaml rust rust-bindgen rust-src schedtool scx-scheds sudo \
         tar texlive-latexextra time wireless-regdb xmlto xz
+
+# Create TKT user
+COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
+RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
+COPY distro-files/arch/etc/passwd /etc/passwd
+COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
+COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
+COPY distro-files/arch/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
+RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
+COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
+RUN chmod +x /home/TKT/init-tkt.sh
 
 # Set environment variables for TKT
 ENV HOME=/home/TKT \

@@ -68,8 +68,8 @@ RUN apt-get update && apt-get upgrade -y && \
     libstdc++-14-dev libudev-dev lld llvm lz4 make patchutils perl python3 python3-pip python3-setuptools rsync \
     schedtool sudo tar time tini wget xz-utils zstd
 
-# Symlink clang-cpp (Distros that don't ship clang-cpp because they're retarded)
-RUN ln -s /usr/bin/clang /usr/bin/clang-cpp
+# Wrap clang-cpp because some distros are retarded and ship broken clang stacks
+RUN echo "/usr/bin/clang -E '$@'" >> /usr/bin/clang-cpp && chmod +x /usr/bin/clang-cpp
 
 # Clean APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

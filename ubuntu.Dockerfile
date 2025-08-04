@@ -32,8 +32,8 @@ RUN apt-get install -y --no-install-recommends --no-install-suggests \
       bash ccache cmake kmod lz4 make patchutils python3 python3-pip \
       rsync sudo tar time tini zstd liblz4-dev libxxhash-dev nano
 
-# Ensure clang-cpp is resolved (redundant but safe fallback)
-RUN ln -sf /usr/bin/clang /usr/bin/clang-cpp || true
+# Wrap clang-cpp because some distros are retarded and ship broken clang stacks
+RUN echo "/usr/bin/clang -E '$@'" >> /usr/bin/clang-cpp && chmod +x /usr/bin/clang-cpp
 
 # Set environment variables for TKT
 ENV HOME=/home/TKT \
