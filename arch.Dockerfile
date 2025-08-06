@@ -23,34 +23,14 @@ RUN pacman -Syu --needed --noconfirm --asexplicit \
         tar texlive-latexextra time wireless-regdb xmlto xz
 
 # Create TKT user
-COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
-RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
+RUN useradd --badname -U -m TKT && \
+    chown -R TKT:TKT /home/TKT && \
+    mkdir -p /home/TKT/.config
 COPY distro-files/arch/etc/passwd /etc/passwd
 COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
 COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
 COPY distro-files/arch/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
 RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
-COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
-RUN chmod +x /home/TKT/init-tkt.sh
-
-# Set environment variables for TKT
-ENV HOME=/home/TKT \
-    USER=TKT
-
-# Set working directory to user's home
-WORKDIR /home/TKT
-
-# Use the TKT user from this point on
-USER TKT
-
-# Setup the TKT repo ahead of time to save a little time
-RUN /home/TKT/init-tkt.sh && rm /home/TKT/init-tkt.sh
-
-# Set working directory to the TKT repo
-WORKDIR /home/TKT/TKT
-
-# Echo mirrorlist for debug purposes
-RUN cat /etc/pacman.d/mirrorlist
 
 # Final command (login shell)
 ENTRYPOINT ["/usr/bin/tini", "--"]

@@ -6,16 +6,10 @@ COPY distro-files/mint/etc/profile /etc/profile
 COPY distro-files/etc/shells /etc/shells
 COPY distro-files/etc/resolv.conf /etc/resolv.conf
 
-# Create TKT user
-COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
-RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
-COPY distro-files/mint/etc/passwd /etc/passwd
-COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
-COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
-COPY distro-files/mint/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
-RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
-COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
-RUN chmod +x /home/TKT/init-tkt.sh
+# Copy TKT GHCI configs
+COPY distro-files/GHCI.cfg /root/.config/TKT.cfg.base
+COPY distro-files/mint/GHCI.cfg /root/.config/TKT.cfg.distro
+RUN cat /root/.config/TKT.cfg.distro /root/.config/TKT.cfg.base >> /root/.config/TKT.cfg
 
 # Add Mint repo + keyring
 ENV DEBIAN_FRONTEND=noninteractive
@@ -31,26 +25,11 @@ RUN apt-get install -y \
     clang lld llvm clang-format clang-tidy clang-tools \
     liblz4-dev libxxhash-dev software-properties-common tini
 
-# Time to fix Mint's broken ass distro
-RUN userdel -rf ubuntu || true
-RUN chown -R TKT:TKT /home/TKT
-RUN ln -s /usr/bin/clang /usr/bin/clang-cpp
+# Wrap clang-cpp because some distros are retarded and ship broken clang stacks
+RUN echo "/usr/bin/clang -E '$@'" >> /usr/bin/clang-cpp && chmod +x /usr/bin/clang-cpp
 
 # Clean up
 RUN apt-get clean
-
-# Set environment variables for TKT
-ENV HOME=/home/TKT \
-    USER=TKT
-
-# Use the TKT user from this point on
-USER TKT
-
-# Setup the TKT repo ahead of time to save a little time
-RUN /home/TKT/init-tkt.sh
-
-# Set working directory to user's home
-WORKDIR /home/TKT/TKT
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["/bin/bash"]

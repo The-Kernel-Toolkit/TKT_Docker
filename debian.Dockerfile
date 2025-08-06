@@ -8,15 +8,9 @@ COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/debian/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
 
 # Create TKT user
-COPY distro-files/gen-TKT-user.sh /gen-TKT-user.sh
-RUN chmod +x /gen-TKT-user.sh && /gen-TKT-user.sh && rm /gen-TKT-user.sh
-COPY distro-files/debian/etc/passwd /etc/passwd
-COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
-COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
-COPY distro-files/debian/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
-RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
-COPY distro-files/init-tkt.sh /home/TKT/init-tkt.sh
-RUN chmod +x /home/TKT/init-tkt.sh
+COPY distro-files/GHCI.cfg /root/.config/TKT.cfg.base
+COPY distro-files/debian/GHCI.cfg /root/.config/TKT.cfg.distro
+RUN cat /root/.config/TKT.cfg.distro /root/.config/TKT.cfg.base >> /root/.config/TKT.cfg
 
 # Base system & dev tools
 RUN apt-get update && apt-get upgrade -y && \
@@ -73,22 +67,6 @@ RUN echo "/usr/bin/clang -E '$@'" >> /usr/bin/clang-cpp && chmod +x /usr/bin/cla
 
 # Clean APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Set environment variables for TKT
-ENV HOME=/home/TKT \
-    USER=TKT
-
-# Set working directory to user's home
-WORKDIR /home/TKT
-
-# Use the TKT user from this point on
-USER TKT
-
-# Setup the TKT repo ahead of time to save a little time
-RUN /home/TKT/init-tkt.sh
-
-# Set working directory to the TKT repo
-WORKDIR /home/TKT/TKT
 
 # Final command (login shell)
 ENTRYPOINT ["/usr/bin/tini", "--"]
