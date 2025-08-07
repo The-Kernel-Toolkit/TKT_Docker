@@ -8,6 +8,8 @@ COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/debian/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
 
 # Create TKT user
+ENV HOME=/root \
+    USER=root
 COPY distro-files/GHCI.cfg /root/.config/TKT.cfg.base
 COPY distro-files/debian/GHCI.cfg /root/.config/TKT.cfg.distro
 RUN cat /root/.config/TKT.cfg.distro /root/.config/TKT.cfg.base >> /root/.config/TKT.cfg

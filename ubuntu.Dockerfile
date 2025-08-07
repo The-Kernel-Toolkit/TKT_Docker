@@ -10,6 +10,8 @@ COPY distro-files/ubuntu/etc/apt/sources.list.d/plucky.list /etc/apt/sources.lis
 COPY distro-files/ubuntu/etc/apt/sources.list.d/oracular.list /etc/apt/sources.list.d/oracular.list
 
 # Copy TKT GHCI configs
+ENV HOME=/root \
+    USER=root
 COPY distro-files/GHCI.cfg root/.config/TKT.cfg.base
 COPY distro-files/ubuntu/GHCI.cfg /root/.config/TKT.cfg.distro
 RUN cat /root/.config/TKT.cfg.distro /root/.config/TKT.cfg.base >> /root/.config/TKT.cfg
