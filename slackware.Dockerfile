@@ -8,11 +8,10 @@ COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/slackware/etc/slackpkg/mirrors /etc/slackpkg/mirrors
 
 # Create TKT user
-ENV HOME=/root \
-    USER=root
-COPY distro-files/GHCI.cfg /root/.config/TKT.cfg.base
-COPY distro-files/slackware/GHCI.cfg /root/.config/TKT.cfg.distro
-RUN cat /root/.config/TKT.cfg.distro /root/.config/TKT.cfg.base >> /root/.config/TKT.cfg
+ENV HOME=/github/home
+COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
+COPY distro-files/slackware/GHCI.cfg /github/home/.config/TKT.cfg.distro
+RUN cat /github/home/.config/TKT.cfg.distro /github/home/.config/TKT.cfg.base >> /github/home/.config/TKT.cfg
 
 # Fix ca-certificates the Slackware way
 RUN wget --no-check-certificate "http://mirrors.unixsol.org/slackware/slackware64-current/slackware64/n/ca-certificates-$(date +%Y%m%d).txz" -O /tmp/ca-certificates.txz || true && \

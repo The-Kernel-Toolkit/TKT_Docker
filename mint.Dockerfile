@@ -7,11 +7,10 @@ COPY distro-files/etc/shells /etc/shells
 COPY distro-files/etc/resolv.conf /etc/resolv.conf
 
 # Copy TKT GHCI configs
-ENV HOME=/root \
-    USER=root
-COPY distro-files/GHCI.cfg /root/.config/TKT.cfg.base
-COPY distro-files/mint/GHCI.cfg /root/.config/TKT.cfg.distro
-RUN cat /root/.config/TKT.cfg.distro /root/.config/TKT.cfg.base >> /root/.config/TKT.cfg
+ENV HOME=/github/home
+COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.basegithub/home
+COPY distro-files/mint/GHCI.cfg /github/home/.config/TKT.cfg.distro
+RUN cat /github/home/.config/TKT.cfg.distro /github/home/.config/TKT.cfg.base >> /github/home/.config/TKT.cfg
 
 # Add Mint repo + keyring
 ENV DEBIAN_FRONTEND=noninteractive

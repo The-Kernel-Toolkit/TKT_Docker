@@ -6,11 +6,10 @@ COPY distro-files/void/etc/profile /etc/profile
 COPY distro-files/etc/shells /etc/shells
 COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/void//etc/xbps.d/00-repository-main.conf /etc/xbps.d/00-repository-main.conf
-ENV HOME=/root \
-    USER=root
-COPY distro-files/GHCI.cfg /root/.config/TKT.cfg.base
-COPY distro-files/void/GHCI.cfg /root/.config/TKT.cfg.distro
-RUN cat /root/.config/TKT.cfg.distro /root/.config/TKT.cfg.base >> /root/.config/TKT.cfg
+ENV HOME=/github/home
+COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
+COPY distro-files/void/GHCI.cfg /github/home/.config/TKT.cfg.distro
+RUN cat /github/home/.config/TKT.cfg.distro /github/home/.config/TKT.cfg.base >> /github/home/.config/TKT.cfg
 
 # Sync base system and certs
 RUN xbps-install -Suy xbps && \
