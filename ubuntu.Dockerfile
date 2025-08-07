@@ -10,7 +10,7 @@ COPY distro-files/ubuntu/etc/apt/sources.list.d/plucky.list /etc/apt/sources.lis
 COPY distro-files/ubuntu/etc/apt/sources.list.d/oracular.list /etc/apt/sources.list.d/oracular.list
 
 # Copy TKT GHCI configs
-RUN mkdir -p /github/home
+RUN mkdir -p /github/home/.config
 ENV HOME=/github/home
 COPY distro-files/GHCI.cfg github/home/.config/TKT.cfg.base
 COPY distro-files/ubuntu/GHCI.cfg /github/home/.config/TKT.cfg.distro
