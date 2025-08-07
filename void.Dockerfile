@@ -10,9 +10,10 @@ COPY distro-files/void//etc/xbps.d/00-repository-main.conf /etc/xbps.d/00-reposi
 # Setup TKT configs
 RUN mkdir -p /github/home/.config
 ENV HOME=/github/home
-COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
-COPY distro-files/void/GHCI.cfg /github/home/.config/TKT.cfg.distro
-RUN cat /github/home/.config/TKT.cfg.distro /github/home/.config/TKT.cfg.base >> /github/home/.config/TKT.cfg
+COPY distro-files/GHCI.cfg /TKT.cfg.base
+COPY distro-files/void/GHCI.cfg /TKT.cfg.distro
+RUN cat /TKT.cfg.distro /TKT.cfg.base >> /TKT.cfg
+RUN rm /TKT.cfg.distro /TKT.cfg.base
 
 # Sync base system and certs
 RUN xbps-install -Suy xbps && \

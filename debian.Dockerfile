@@ -10,9 +10,10 @@ COPY distro-files/debian/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d
 # Create TKT user
 RUN mkdir -p /github/home/.config
 ENV HOME=/github/home
-COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
-COPY distro-files/debian/GHCI.cfg /github/home/.config/TKT.cfg.distro
-RUN cat /github/home/.config/TKT.cfg.distro /github/home/.config/TKT.cfg.base >> /github/home/.config/TKT.cfg
+COPY distro-files/GHCI.cfg /TKT.cfg.base
+COPY distro-files/debian/GHCI.cfg /TKT.cfg.distro
+RUN cat /TKT.cfg.distro /TKT.cfg.base >> /TKT.cfg
+RUN rm /TKT.cfg.distro /TKT.cfg.base
 
 # Base system & dev tools
 RUN apt-get update && apt-get upgrade -y && \

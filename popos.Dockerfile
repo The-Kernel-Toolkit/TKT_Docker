@@ -10,9 +10,10 @@ COPY distro-files/popos/etc/os-release /etc/os-release
 # Create TKT user
 RUN mkdir -p /github/home/.config
 ENV HOME=/github/home
-COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
-COPY distro-files/popos/GHCI.cfg /github/home/.config/TKT.cfg.distro
-RUN cat /github/home/.config/TKT.cfg.distro /github/home/.config/TKT.cfg.base >> /github/home/.config/TKT.cfg
+COPY distro-files/GHCI.cfg /TKT.cfg.base
+COPY distro-files/popos/GHCI.cfg /TKT.cfg.distro
+RUN cat /TKT.cfg.distro /TKT.cfg.base >> /TKT.cfg
+RUN rm /TKT.cfg.distro /TKT.cfg.base
 
 # Add System76 repo + key
 RUN apt-get update && \

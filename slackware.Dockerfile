@@ -10,9 +10,10 @@ COPY distro-files/slackware/etc/slackpkg/mirrors /etc/slackpkg/mirrors
 # Create TKT user
 RUN mkdir -p /github/home/.config
 ENV HOME=/github/home
-COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
-COPY distro-files/slackware/GHCI.cfg /github/home/.config/TKT.cfg.distro
-RUN cat /github/home/.config/TKT.cfg.distro /github/home/.config/TKT.cfg.base >> /github/home/.config/TKT.cfg
+COPY distro-files/GHCI.cfg /TKT.cfg.base
+COPY distro-files/slackware/GHCI.cfg /TKT.cfg.distro
+RUN cat /TKT.cfg.distro /TKT.cfg.base >> /TKT.cfg
+RUN rm /TKT.cfg.distro /TKT.cfg.base
 
 # Fix ca-certificates the Slackware way
 RUN wget --no-check-certificate "http://mirrors.unixsol.org/slackware/slackware64-current/slackware64/n/ca-certificates-$(date +%Y%m%d).txz" -O /tmp/ca-certificates.txz || true && \

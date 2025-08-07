@@ -9,9 +9,10 @@ COPY distro-files/etc/resolv.conf /etc/resolv.conf
 # Copy TKT GHCI configs
 RUN mkdir -p /github/home/.config
 ENV HOME=/github/home
-COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
-COPY distro-files/fedora/GHCI.cfg /github/home/.config/TKT.cfg.distro
-RUN cat /github/home/.config/TKT.cfg.distro /github/home/.config/TKT.cfg.base >> /github/home/.config/TKT.cfg
+COPY distro-files/GHCI.cfg /TKT.cfg.base
+COPY distro-files/fedora/GHCI.cfg /TKT.cfg.distro
+RUN cat /TKT.cfg.distro /TKT.cfg.base >> /TKT.cfg
+RUN rm /TKT.cfg.distro /TKT.cfg.base
 
 # Update dnf and get tools
 RUN dnf upgrade --assumeyes
