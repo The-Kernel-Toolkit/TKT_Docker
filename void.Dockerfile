@@ -6,6 +6,9 @@ COPY distro-files/void/etc/profile /etc/profile
 COPY distro-files/etc/shells /etc/shells
 COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/void//etc/xbps.d/00-repository-main.conf /etc/xbps.d/00-repository-main.conf
+
+# Setup TKT configs
+RUN mkdir -p /github/home
 ENV HOME=/github/home
 COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
 COPY distro-files/void/GHCI.cfg /github/home/.config/TKT.cfg.distro

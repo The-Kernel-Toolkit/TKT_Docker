@@ -7,6 +7,7 @@ COPY distro-files/etc/shells /etc/shells
 COPY distro-files/etc/resolv.conf /etc/resolv.conf
 
 # Copy TKT GHCI configs
+RUN mkdir -p /github/home
 ENV HOME=/github/home
 COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
 COPY distro-files/fedora/GHCI.cfg /github/home/.config/TKT.cfg.distro

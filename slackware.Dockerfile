@@ -8,6 +8,7 @@ COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/slackware/etc/slackpkg/mirrors /etc/slackpkg/mirrors
 
 # Create TKT user
+RUN mkdir -p /github/home
 ENV HOME=/github/home
 COPY distro-files/GHCI.cfg /github/home/.config/TKT.cfg.base
 COPY distro-files/slackware/GHCI.cfg /github/home/.config/TKT.cfg.distro
