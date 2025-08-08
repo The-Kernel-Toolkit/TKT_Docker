@@ -11,7 +11,7 @@ RUN mkdir -p /github/home/.config
 ENV HOME=/github/home
 COPY distro-files/GHCI.cfg /TKT.cfg.base
 COPY distro-files/fedora/GHCI.cfg /TKT.cfg.distro
-RUN cat /TKT.cfg.distro /TKT.cfg.base >> /TKT.cfg
+RUN cat /TKT.cfg.distro /TKT.cfg.base >> /GHCI.cfg
 RUN rm /TKT.cfg.distro /TKT.cfg.base
 
 # Update dnf and get tools
