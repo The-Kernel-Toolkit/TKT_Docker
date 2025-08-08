@@ -24,7 +24,7 @@ RUN emerge --oneshot portage
 # Echo the make.conf for debug purposes
 RUN cat /etc/portage/make.conf
 
-RUN emerge --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --autounmask=y --autounmask-continue \
+RUN emerge --quiet --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --autounmask=y --autounmask-continue \
       sys-kernel/gentoo-kernel-bin \
       llvm-core/llvm \
       llvm-core/clang \
