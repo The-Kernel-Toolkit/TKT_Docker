@@ -8,24 +8,25 @@ COPY distro-files/etc/resolv.conf /etc/resolv.conf
 COPY distro-files/slackware/etc/slackpkg/mirrors /etc/slackpkg/mirrors
 
 # Create TKT user
-RUN mkdir -p /github/home/.config
-ENV HOME=/github/home
 COPY distro-files/GHCI.cfg /TKT.cfg.base
 COPY distro-files/slackware/GHCI.cfg /TKT.cfg.distro
 RUN cat /TKT.cfg.distro /TKT.cfg.base >> /GHCI.cfg
 RUN rm /TKT.cfg.distro /TKT.cfg.base
 
 # Fix ca-certificates the Slackware way
-RUN wget --no-check-certificate "http://mirrors.unixsol.org/slackware/slackware64-current/slackware64/n/ca-certificates-$(date +%Y%m%d).txz" -O /tmp/ca-certificates.txz || true && \
-    installpkg /tmp/ca-certificates.txz || true && \
-    echo "YES" | slackpkg update gpg && \
+RUN echo "YES" | slackpkg update gpg && \
+    slackpkg update && \
+    yes | slackpkg install perl nghttp2 nghttp3 openssl && \
+    yes | slackpkg install ca-certificates && \
+    update-ca-certificates && \
+    c_rehash && \
     slackpkg update
 
 # Install build deps
 RUN yes | slackpkg -batch=on -default_answer=y install \
     bash bc binutils bison brotli ccache clang cmake cpio curl cyrus-sasl diffutils dwarves elfutils fakeroot fakeroot-ng file flex gc gcc \
     gcc-g++ gcc-gcobol gcc-gdc gcc-gfortran gcc-gm2 gcc-gnat gcc-go gcc-objc gcc-rust git glibc guile gzip kernel-headers kmod libedit libelf \
-    libxml2 lld llvm lz4 lzop m4 make ncurses nghttp2 nghttp3 openssl patchutils perl python3 python3-pip rsync schedtool spirv-llvm-translator \
+    libxml2 lld llvm lz4 lzop m4 make ncurses patchutils python3 python3-pip rsync schedtool spirv-llvm-translator \
     sudo tar time wget xxHash xz zstd
 
 # ldconfig because Slacklyfe
