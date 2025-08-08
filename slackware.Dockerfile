@@ -18,7 +18,7 @@ RUN rm /TKT.cfg.distro /TKT.cfg.base
 # Fix ca-certificates the Slackware way
 RUN wget --no-check-certificate "http://mirrors.unixsol.org/slackware/slackware64-current/slackware64/n/ca-certificates-$(date +%Y%m%d).txz" -O /tmp/ca-certificates.txz || true && \
     installpkg /tmp/ca-certificates.txz || true && \
-    slackpkg update gpg && \
+    echo "YES" | slackpkg update gpg && \
     slackpkg update
 
 # Install build deps
