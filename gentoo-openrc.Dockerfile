@@ -46,9 +46,9 @@ ENV HOME=/root \
 USER root
 
 # Copy distro-specific config files
-COPY distro-files/GHCI.cfg $HOME/.config/TKT.cfg.base
-COPY distro-files/gentoo-openrc/GHCI.cfg $HOME/.config/TKT.cfg.distro
-RUN cat $HOME/.config/TKT.cfg.distro $HOME/.config/TKT.cfg.base >> $HOME/.config/TKT.cfg
+COPY distro-files/GHCI.cfg /GHCI.cfg.base
+COPY distro-files/gentoo-openrc/GHCI.cfg /GHCI.cfg.distro
+RUN cat /GHCI.cfg.distro /GHCI.cfg.base >> /GHCI.cfg
 
 # Final command (login shell)
 ENTRYPOINT ["/usr/bin/tini", "--"]
