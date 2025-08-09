@@ -28,9 +28,9 @@ RUN useradd --badname -U -m TKT && \
     mkdir -p /home/TKT/.config
 COPY distro-files/arch/etc/passwd /etc/passwd
 COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
-COPY distro-files/GHCI.cfg /home/TKT/.config/TKT.cfg.base
-COPY distro-files/arch/GHCI.cfg /home/TKT/.config/TKT.cfg.distro
-RUN cat /home/TKT/.config/TKT.cfg.distro /home/TKT/.config/TKT.cfg.base >> /home/TKT/.config/TKT.cfg
+COPY distro-files/GHCI.cfg /GHCI.cfg.base
+COPY distro-files/arch/GHCI.cfg /GHCI.cfg.distro
+RUN cat /GHCI.cfg.distro /GHCI.cfg.base >> /GHCI.cfg
 
 # Final command (login shell)
 ENTRYPOINT ["/usr/bin/tini", "--"]
