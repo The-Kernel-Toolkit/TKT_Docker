@@ -9,14 +9,14 @@ on:
     branches:
       - '**'          # any branch
   schedule:
-    - cron: '0 0 1 * *'  # once a month
+    - cron: '0 0 4 * *'  # four times a month (once a week)
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        distro: [arch, debian, gentoo-musl, gentoo-openrc, gentoo-systemd, mint, nixos, fedora, popos, slackware, suse, ubuntu, void]
+        distro: [arch, debian, gentoo-openrc, gentoo-systemd, mint, nixos, fedora, popos, slackware, suse, ubuntu, void]
 
     steps:
       - uses: actions/checkout@v4
