@@ -55,7 +55,7 @@ RUN apt-get update && apt-get upgrade -y && \
     libdav1d7 libice6 libqt5widgets5t64 libxcb-util1 x11-common \
     libdbus-1-3 libicu76 libqt5xml5t64 libxcb-xfixes0 x11proto-dev \
     libdconf1 libinput-bin librhash1 libxcb-xinerama0 xdg-user-dirs \
-    libdeflate0 libinput10 librsvg2-2 libxcb-xinput0 xkb-data \
+    libdeflate0 libinput10 librsvg2-2 libxcb-xinput0 xkb-data gcc-12-base  libgcc-12-dev libstdc++-12-dev \
     libdevmapper1.02.1 libjbig0 librsvg2-common libxcb-xkb1 xorg-sgml-doctools \
     libdouble-conversion3 libjpeg62-turbo libsensors-config libxcb1 xtrans-dev \
     libdrm-amdgpu1 libjson-c5 libsensors5 libxcb1-dev ccache cmake ninja-build nano \
