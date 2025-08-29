@@ -3,7 +3,7 @@ FROM ghcr.io/the-kernel-toolkit/tkt-gentoo-musl-dev:latest AS root
 
 # Update container
 RUN emerge --sync && \
-    emerge -uDN @world && \
+    emerge --quiet --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --autounmask=y --autounmask-continue -uDN @world && \
     etc-update --automode -5 || true
 
 # Optional cleanup to shrink image
