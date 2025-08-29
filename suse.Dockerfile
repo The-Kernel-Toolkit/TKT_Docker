@@ -25,7 +25,7 @@ RUN zypper --gpg-auto-import-keys refresh
 RUN zypper --non-interactive install --no-recommends \
     bash bc bison ccache clang clang-tools cmake cpio curl dwarves flex gawk gcc-c++ git \
     hostname kernel-source kernel-syms kmod libdw-devel libelf-devel libnuma-devel \
-    libopenssl-devel libqt5-qtbase-devel libudev-devel lld llvm lz4 make ncurses-devel \
+    libopenssl-devel libqt5-qtbase-devel libudev-devel lld llvm lz4 lzop make ncurses-devel \
     openssl-devel patchutils perl perl-ExtUtils-MakeMaker python311 python311-devel \
     python311-pip rpm-build rpmdevtools rsync sudo tar time wget xz zstd awk python313 python313-devel python313-pip
 

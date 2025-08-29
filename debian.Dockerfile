@@ -62,7 +62,7 @@ RUN apt-get update && apt-get upgrade -y && \
     bash bc bison binutils binutils-dev binutils-gold build-essential clang clang-format clang-tidy clang-tools \
     cpio curl debhelper device-tree-compiler dpkg-dev dwarves fakeroot flex g++ g++-multilib gcc gcc-multilib git \
     gnupg kmod libc6-dev libc6-dev-i386 libdw-dev libelf-dev libncurses-dev libnuma-dev libperl-dev libssl-dev \
-    libstdc++-14-dev libudev-dev lld llvm lz4 make patchutils perl python3 python3-pip python3-setuptools rsync \
+    libstdc++-14-dev libudev-dev lld llvm lz4 lzop make patchutils perl python3 python3-pip python3-setuptools rsync \
     schedtool sudo tar time tini wget xz-utils zstd
 
 # Wrap clang-cpp because some distros are retarded and ship broken clang stacks

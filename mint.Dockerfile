@@ -24,7 +24,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A6616109451BBBF2
 RUN apt-get install -y \
     build-essential bc bison flex libssl-dev libelf-dev dwarves \
     git curl wget clang lld python3 perl \
-    bash ccache cmake cpio curl git kmod lz4 make patchutils perl python3 python3-pip rsync sudo tar time wget zstd \
+    bash ccache cmake cpio curl git kmod lz4 lzop make patchutils perl python3 python3-pip rsync sudo tar time wget zstd \
     clang lld llvm clang-format clang-tidy clang-tools \
     liblz4-dev libxxhash-dev software-properties-common tini
 

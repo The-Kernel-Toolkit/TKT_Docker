@@ -23,13 +23,13 @@ RUN apt-get install -y --no-install-recommends --no-install-suggests \
       adduser appstream apt bash bc binutils bison build-essential bzip2 ccache \
       clang clang-format clang-tidy clang-tools cmake cpp cpio curl dbus \
       dbus-bin dbus-daemon dbus-session-bus-common dbus-system-bus-common \
-      dbus-user-session dirmngr distro-info-data dmsetup dpkg-dev debhelper \
+      dbus-user-session dirmngr distro-info-data dmsetup dpkg-dev debhelper dwarves \
       fakeroot flex g++ gcc gir1.2-girepository-2.0 gir1.2-glib-2.0 \
       gir1.2-packagekitglib-1.0 git gnupg gnupg-l10n gnupg-utils gpg gpg-agent \
       gpg-wks-client gpgconf gpgsm iso-codes keyboxd kmod libalgorithm-diff-perl \
       libalgorithm-diff-xs-perl libalgorithm-merge-perl libappstream5 \
       libapt-pkg7.0 libassuan9 libcap2-bin libcryptsetup12 libdbus-1-3 \
-      libdevmapper1.02.1 libdpkg-perl libduktape207 libfakeroot \
+      libdevmapper1.02.1 libdpkg-perl libduktape207 libfakeroot libelf-dev \
       libfile-fcntllock-perl libgirepository-1.0-1 libglib2.0-0t64 \
       libglib2.0-bin libglib2.0-data libgstreamer1.0-0 libjson-c5 libksba8 \
       liblocale-gettext-perl liblz4-dev libnss-systemd libpackagekit-glib2-18 \
@@ -54,7 +54,7 @@ RUN apt-get install -y --no-install-recommends --no-install-suggests \
       libarchive-cpio-perl libdebhelper-perl libdw-dev libdw1t64 libfile-stripnondeterminism-perl \
       liblzma-dev libltdl-dev libltdl7 libmagic-mgc libmagic1t64 libmail-sendmail-perl \
       libpipeline1 libsys-hostname-long-perl libtool libuchardet0 libzstd-dev zlib1g-dev \
-      po-debconf
+      po-debconf lzop
 
 # Wrap clang-cpp because some distros are retarded and ship broken clang stacks
 RUN echo "/usr/bin/clang -E '$@'" >> /usr/bin/clang-cpp && chmod +x /usr/bin/clang-cpp

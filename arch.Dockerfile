@@ -17,10 +17,10 @@ RUN pacman -Syy --needed --noconfirm --asexplicit aria2 curl reflector wget
 
 # Update and install base-devel and other needed packages
 RUN pacman -Syu --needed --noconfirm --asexplicit \
-        base-devel bash bc binutils bison ccache clang coreutils cpio docbook-xsl flex gcc gettext git graphviz imagemagick \
-        inetutils initramfs kmod libelf linux-firmware lld llvm mkinitcpio nano pahole patchutils perl python \
-        python-sphinx python-sphinx_rtd_theme python-yaml rust rust-bindgen rust-src schedtool scx-scheds sudo \
-        tar texlive-latexextra time wireless-regdb xmlto xz
+        base-devel bash bc bison bzip2 ccache clang coreutils cpio dialog docbook-xsl dwarves flex gcc gettext git graphviz \
+        imagemagick inetutils initramfs kmod libbpf libelf lld llvm linux-firmware lz4 lzo mkinitcpio nano ncurses openssl \
+        patchutils perl python python-sphinx python-sphinx_rtd_theme python-yaml rsync rust rust-bindgen rust-src schedtool \
+        scx-scheds sudo tar texlive-latexextra time wget wireless-regdb xmlto xz zstd
 
 # Create TKT user
 RUN useradd --badname -U -m TKT && \
