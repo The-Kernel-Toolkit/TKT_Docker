@@ -7,8 +7,6 @@ COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf
 
 # Copy TKT GHCI configs
-RUN mkdir -p /github/home/.config
-ENV HOME=/github/home
 COPY distro-files/GHCI.cfg /TKT.cfg.base
 COPY distro-files/mint/GHCI.cfg /TKT.cfg.distro
 RUN cat /TKT.cfg.distro /TKT.cfg.base >> /GHCI.cfg

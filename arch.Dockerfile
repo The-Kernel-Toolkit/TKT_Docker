@@ -27,7 +27,7 @@ RUN useradd --badname -U -m TKT && \
     chown -R TKT:TKT /home/TKT && \
     mkdir -p /home/TKT/.config
 COPY distro-files/arch/etc/passwd /etc/passwd
-COPY distro-files/etc/sudoers.d/TKT /etc/sudoers.d/TKT
+COPY distro-files/sudoers.d/TKT /etc/sudoers.d/TKT
 COPY distro-files/GHCI.cfg /GHCI.cfg.base
 COPY distro-files/arch/GHCI.cfg /GHCI.cfg.distro
 RUN cat /GHCI.cfg.distro /GHCI.cfg.base >> /GHCI.cfg

@@ -6,9 +6,7 @@ COPY distro-files/profile /etc/profile
 COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf
 
-# Create TKT user
-RUN mkdir -p /github/home/.config
-ENV HOME=/github/home
+# Copy TKT GHCI configs
 COPY distro-files/GHCI.cfg /TKT.cfg.base
 COPY distro-files/suse/GHCI.cfg /TKT.cfg.distro
 RUN cat /TKT.cfg.distro /TKT.cfg.base >> /GHCI.cfg

@@ -7,9 +7,7 @@ COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf
 COPY distro-files/debian/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
 
-# Create TKT user
-RUN mkdir -p /github/home/.config
-ENV HOME=/github/home
+# Copy TKT GHCI configs
 COPY distro-files/GHCI.cfg /TKT.cfg.base
 COPY distro-files/debian/GHCI.cfg /TKT.cfg.distro
 RUN cat /TKT.cfg.distro /TKT.cfg.base >> /GHCI.cfg

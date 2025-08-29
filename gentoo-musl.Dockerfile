@@ -45,8 +45,8 @@ ENV HOME=/root \
     USER=root
 USER root
 
-# Copy distro-specific config files
-COPY distro-files/GHCI.cfg /GHCI.cfg.base
+# Copy TKT GHCI configs
+COPY distro-files/GHCI.cfg /TKT.cfg.base
 COPY distro-files/gentoo-musl/GHCI.cfg /GHCI.cfg.distro
 RUN cat /GHCI.cfg.distro /GHCI.cfg.base >> /GHCI.cfg
 

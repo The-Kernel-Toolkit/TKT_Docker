@@ -7,7 +7,7 @@ COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf
 COPY distro-files/slackware/etc/slackpkg/mirrors /etc/slackpkg/mirrors
 
-# Create TKT user
+# Copy TKT GHCI configs
 COPY distro-files/GHCI.cfg /TKT.cfg.base
 COPY distro-files/slackware/GHCI.cfg /TKT.cfg.distro
 RUN cat /TKT.cfg.distro /TKT.cfg.base >> /GHCI.cfg
