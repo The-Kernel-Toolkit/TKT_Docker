@@ -16,7 +16,6 @@ RUN nix profile install \
       nixpkgs#elfutils \
       nixpkgs#ncurses \
       nixpkgs#git \
-      nixpkgs#wget \
       nixpkgs#xz \
       nixpkgs#bzip2 \
       nixpkgs#gzip
