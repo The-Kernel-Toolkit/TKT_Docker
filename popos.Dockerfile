@@ -2,7 +2,6 @@ FROM ghcr.io/the-kernel-toolkit/tkt-ubuntu-dev:latest AS root
 
 # Copy our files
 COPY distro-files/popos/etc/environment /etc/evironment
-COPY distro-files/popos/etc/profile /etc/profile
 COPY distro-files/popos/etc/os-release /etc/os-release
 
 # Copy TKT GHCI configs
