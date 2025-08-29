@@ -1,5 +1,5 @@
 # Use official Nix image
-FROM nixos/nix:23.05 AS root
+FROM nixos/nix:latest AS root
 
 # Copy DNS config
 COPY distro-files/resolv.conf /etc/resolv.conf
