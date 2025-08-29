@@ -1,10 +1,10 @@
 FROM gentoo/stage3:musl AS root
 
 # Copy our files
-COPY distro-files/gentoo-musl/etc/environment /etc/environment
-COPY distro-files/gentoo-musl/etc/profile /etc/profile
-COPY distro-files/etc/shells /etc/shells
-COPY distro-files/etc/resolv.conf /etc/resolv.conf
+COPY distro-files/environment /etc/evironment
+COPY distro-files/profile /etc/profile
+COPY distro-files/shells /etc/shells
+COPY distro-files/resolv.conf /etc/resolv.conf
 COPY distro-files/gentoo-musl/etc/portage/make.conf /etc/portage/make.conf
 COPY distro-files/gentoo-musl/etc/portage/package.accept_keywords/tkt /etc/portage/package.accept_keywords/tkt
 COPY distro-files/gentoo-musl/etc/portage/package.use/tkt /etc/portage/package.use/tkt

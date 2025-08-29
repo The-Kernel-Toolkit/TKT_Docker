@@ -1,10 +1,10 @@
 FROM debian:sid AS root
 
 # Copy our base files
-COPY distro-files/debian/etc/environment /etc/evironment
-COPY distro-files/debian/etc/profile /etc/profile
-COPY distro-files/etc/shells /etc/shells
-COPY distro-files/etc/resolv.conf /etc/resolv.conf
+COPY distro-files/environment /etc/evironment
+COPY distro-files/profile /etc/profile
+COPY distro-files/shells /etc/shells
+COPY distro-files/resolv.conf /etc/resolv.conf
 COPY distro-files/debian/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
 
 # Create TKT user

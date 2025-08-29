@@ -1,10 +1,10 @@
 FROM archlinux:base-devel AS root
 
 # Copy our base files
-COPY distro-files/arch/etc/environment /etc/environment
-COPY distro-files/arch/etc/profile /etc/profile
-COPY distro-files/etc/shells /etc/shells
-COPY distro-files/etc/resolv.conf /etc/resolv.conf
+COPY distro-files/environment /etc/evironment
+COPY distro-files/profile /etc/profile
+COPY distro-files/shells /etc/shells
+COPY distro-files/resolv.conf /etc/resolv.conf
 COPY distro-files/arch/etc/pacman.conf /etc/pacman.conf
 COPY distro-files/arch/etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist
 COPY distro-files/arch/etc/makepkg.conf /etc/makepkg.conf

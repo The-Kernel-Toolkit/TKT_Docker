@@ -1,10 +1,10 @@
 FROM linuxmintd/mint21-amd64 AS root
 
 # Copy our base files
-COPY distro-files/mint/etc/environment /etc/evironment
-COPY distro-files/mint/etc/profile /etc/profile
-COPY distro-files/etc/shells /etc/shells
-COPY distro-files/etc/resolv.conf /etc/resolv.conf
+COPY distro-files/environment /etc/evironment
+COPY distro-files/profile /etc/profile
+COPY distro-files/shells /etc/shells
+COPY distro-files/resolv.conf /etc/resolv.conf
 
 # Copy TKT GHCI configs
 RUN mkdir -p /github/home/.config

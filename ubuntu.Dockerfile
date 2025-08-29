@@ -2,10 +2,10 @@
 FROM ubuntu:oracular AS root
 
 # Copy over our files
-COPY distro-files/ubuntu/etc/environment /etc/environment
-COPY distro-files/ubuntu/etc/profile /etc/profile
-COPY distro-files/etc/shells /etc/shells
-COPY distro-files/etc/resolv.conf /etc/resolv.conf
+COPY distro-files/environment /etc/evironment
+COPY distro-files/profile /etc/profile
+COPY distro-files/shells /etc/shells
+COPY distro-files/resolv.conf /etc/resolv.conf
 COPY distro-files/ubuntu/etc/apt/sources.list.d/plucky.list /etc/apt/sources.list.d/plucky.list
 COPY distro-files/ubuntu/etc/apt/sources.list.d/oracular.list /etc/apt/sources.list.d/oracular.list
 
