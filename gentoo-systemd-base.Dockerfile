@@ -13,7 +13,7 @@ COPY distro-files/gentoo-systemd/etc/portage/package.use/tkt /etc/portage/packag
 RUN getuto
 
 # Sync tree and set profile
-RUN emerge-webrsync
+RUN emerge-webrsync && emerge --sync
 RUN eselect profile set 2
 
 RUN perl-cleaner --all
@@ -49,6 +49,10 @@ USER root
 COPY distro-files/GHCI.cfg /GHCI.cfg.base
 COPY distro-files/gentoo-systemd/GHCI.cfg /GHCI.cfg.distro
 RUN cat /GHCI.cfg.distro /GHCI.cfg.base >> /GHCI.cfg
+
+# Cleanup to shrink image
+RUN emerge --depclean && \
+    revdep-rebuild
 
 # Final command (login shell)
 ENTRYPOINT ["/usr/bin/tini", "--"]
