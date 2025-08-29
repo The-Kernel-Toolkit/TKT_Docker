@@ -8,20 +8,16 @@ COPY distro-files/resolv.conf /etc/resolv.conf
 RUN echo "experimental-features = flakes nix-command" >> /etc/nix/nix.conf
 
 # Install basic kernel build dependencies via nix profile
-RUN nix profile install \
+RUN nix profile add \
       nixpkgs#gcc \
       nixpkgs#gnumake \
       nixpkgs#bc \
       nixpkgs#perl \
       nixpkgs#elfutils \
       nixpkgs#ncurses \
-      nixpkgs#git \
       nixpkgs#xz \
       nixpkgs#bzip2 \
-      nixpkgs#gzip
-
-# Install cachix for caching builds
-RUN nix profile install nixpkgs#cachix
+      nixpkgs#cachix
 
 # Default command: drop into shell
 CMD ["/bin/sh"]

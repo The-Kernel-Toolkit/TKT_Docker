@@ -5,9 +5,7 @@ permissions:
   contents: read
 
 on:
-  push:               # trigger on all pushes
-    branches:
-      - '**'          # any branch
+  workflow_dispatch:   # manual trigger
   schedule:
     - cron: '0 0 4 * *'  # every week (4 AM UTC, adjust as needed)
 
