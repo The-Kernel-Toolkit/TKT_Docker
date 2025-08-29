@@ -46,7 +46,7 @@ ENV HOME=/root \
 USER root
 
 # Copy TKT GHCI configs
-COPY distro-files/GHCI.cfg /TKT.cfg.base
+COPY distro-files/GHCI.cfg /GHCI.cfg.base
 COPY distro-files/gentoo-openrc/GHCI.cfg /GHCI.cfg.distro
 RUN cat /GHCI.cfg.distro /GHCI.cfg.base >> /GHCI.cfg
 
