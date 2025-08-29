@@ -13,6 +13,7 @@ RUN chmod +x /usr/bin/tini
 
 # Run reflector to speed up repos
 RUN pacman -Syy --needed --noconfirm --asexplicit aria2 curl reflector wget
+# Reflector disabled until AUR is stable again
 #RUN reflector --fastest 5 --verbose --protocol https,http --latest 5 --age 1 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Update and install base-devel and other needed packages

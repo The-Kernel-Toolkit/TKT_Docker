@@ -16,13 +16,11 @@ RUN getuto
 RUN emerge-webrsync && emerge --sync
 RUN eselect profile set 1
 
+# Cleanup perl
 RUN perl-cleaner --all
 
-# Update portage and emerge packages
+# Update portage
 RUN emerge --oneshot portage
-
-# Echo the make.conf for debug purposes
-RUN cat /etc/portage/make.conf
 
 RUN emerge --quiet --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --autounmask=y --autounmask-continue \
       sys-kernel/gentoo-kernel-bin \
@@ -39,7 +37,12 @@ RUN emerge --quiet --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-us
       app-admin/sudo \
       dev-util/patchutils \
       sys-process/tini \
-      app-portage/gentoolkit
+      app-portage/gentoolkit && \
+     etc-update --automode -5 || true
+
+# Update remaining packages
+RUN emerge --quiet --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --autounmask=y --autounmask-continue -uDN @world && \
+    etc-update --automode -5 || true
 
 # Set home variables for root
 ENV HOME=/root \
