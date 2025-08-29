@@ -1,7 +1,7 @@
 FROM archlinux:base-devel AS root
 
 # Copy our base files
-COPY distro-files/environment /etc/evironment
+COPY distro-files/arch/etc/environment /etc/evironment
 COPY distro-files/profile /etc/profile
 COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf

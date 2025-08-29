@@ -1,7 +1,7 @@
 FROM voidlinux/voidlinux:latest AS root
 
 # Copy our files
-COPY distro-files/environment /etc/evironment
+COPY distro-files/void/etc/environment /etc/evironment
 COPY distro-files/profile /etc/profile
 COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf

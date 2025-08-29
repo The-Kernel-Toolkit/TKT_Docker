@@ -1,7 +1,7 @@
 FROM gentoo/stage3:musl AS root
 
 # Copy our files
-COPY distro-files/environment /etc/evironment
+COPY distro-files/gentoo-musl/etc/environment /etc/evironment
 COPY distro-files/profile /etc/profile
 COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf
