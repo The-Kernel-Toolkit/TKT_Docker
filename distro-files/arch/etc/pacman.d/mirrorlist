@@ -1,8 +1,6 @@
-Server = http://us.mirrors.cicku.me/archlinux/$repo/os/$arch
-Server = https://us.mirrors.cicku.me/archlinux/$repo/os/$arch
+Server = rsync://mirrors.kernel.org/archlinux/$repo/os/$arch
 Server = https://mirrors.mit.edu/archlinux/$repo/os/$arch
 Server = http://mirrors.mit.edu/archlinux/$repo/os/$arch
-Server = rsync://mirrors.kernel.org/archlinux/$repo/os/$arch
 Server = http://codingflyboy.mm.fcix.net/archlinux/$repo/os/$arch
 Server = http://arch.mirror.constant.com/$repo/os/$arch
 Server = https://mirror.theash.xyz/arch/$repo/os/$arch
