@@ -14,7 +14,7 @@ RUN rm /TKT.cfg.distro /TKT.cfg.base
 COPY distro-files/popos/etc/apt/sources.list.d/tkt.list /etc/apt/sources.list.d/tkt.list
 RUN apt-get update && \
     wget -O- https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x63C46DF0140D738961429F4E204DD8AEC33A7AFF | \
-    gpg --dearmor | tee /etc/apt/trusted.gpg.d/popos.gpg > /dev/null
+    gpg --dearmor | tee /etc/apt/trusted.gpg.d/popos.gpg
 
 # Clean up APT
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

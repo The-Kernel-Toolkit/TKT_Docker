@@ -6,10 +6,6 @@
 # ==============================================================================
 
 # --- Variable Definitions ---
-
-# Define the list of distros that use a simple, single Dockerfile build.
-# To add a new distro, just add its name here and create the corresponding
-# <name>.Dockerfile.
 DISTROS_SIMPLE := \
 	arch \
 	debian \
@@ -22,95 +18,71 @@ DISTROS_SIMPLE := \
 	ubuntu \
 	void
 
-# Define the Gentoo-specific build targets.
 DISTROS_GENTOO := \
 	gentoo-openrc \
 	gentoo-systemd \
 	gentoo-musl
 
-# Combine all targets for the 'all' and 'clean' rules.
-ALL_TARGETS := $(DISTROS_SIMPLE) $(DISTROS_GENTOO)
+ALL_DISTROS := $(DISTROS_SIMPLE) $(DISTROS_GENTOO)
 
-# Use .PHONY to ensure these targets run even if files with the same name exist.
-.PHONY: all help gentoo clean $(ALL_TARGETS)
+.PHONY: all help gentoo clean $(ALL_DISTROS)
+
+# Prevent parallel builds (important for heavy builds / network usage)
+.NOTPARALLEL:
+
+# Default BUILD_TYPE
+BUILD_TYPE ?= base
+
+# Map BUILD_TYPE to Dockerfile suffix
+ifeq ($(BUILD_TYPE),base)
+	DOCKERFILE_SUFFIX := base
+else ifeq ($(BUILD_TYPE),update)
+	DOCKERFILE_SUFFIX := updater
+else
+$(error Invalid BUILD_TYPE '$(BUILD_TYPE)'. Must be 'base' or 'update'.)
+endif
 
 # --- Main Targets ---
 
-# The default target, executed when you just run 'make'.
-all: $(ALL_TARGETS)
-	@echo "All container builds are complete."
+all: $(ALL_DISTROS)
+	@echo "All container builds complete."
 
-# A help target to explain how to use the Makefile.
 help:
-	@echo "Usage: make [target]"
+	@echo "Usage: make [target] BUILD_TYPE=base|update"
+	@echo ""
+	@echo "Example: make void BUILD_TYPE=update"
 	@echo ""
 	@echo "Core Targets:"
-	@echo "  all            Build all 13 container images (default)."
+	@echo "  all            Build all container images (defaults to BUILD_TYPE=base)."
 	@echo "  gentoo         Build all 3 Gentoo variants."
 	@echo "  clean          Remove all container images built by this Makefile."
-	@echo "  help           Show this help message."
-	@echo "Options:"
-	@echo "  load           Passes the '--load' flag to 'docker build' to load."
-	@echo "                 the image into the local docker images."
-	@echo ""
 	@echo ""
 	@echo "Individual Container Targets:"
-	@echo "  arch           debian         fedora         gentoo-musl"
-	@echo "  gentoo-openrc  gentoo-systemd mint           nixos"
-	@echo "  popos          slackware      suse           ubuntu"
-	@echo "  void"
+	@echo "  $(ALL_DISTROS)"
+	@echo ""
+	@echo "Options:"
+	@echo "  BUILD_TYPE     Specify 'base' or 'update' build (default: base)."
+	@echo "  load           Passes the '--load' flag to 'docker build'."
 
-
-# --- Build Recipes ---
-
-# Add the `--load` flag to docker, to load the build image into the users system.
 # --- Special Target: load ---
 load:
 	@echo "--- Enabling image loading into local docker ---"
 	@$(MAKE) $(filter-out load,$(MAKECMDGOALS)) LOAD=--load
 	@exit 0
 
+# --- Build Rules ---
 
-# Generic pattern rule for all simple, single-Dockerfile builds.
-# The '$@' is an automatic variable that holds the name of the target.
-# For example, when you run 'make arch', '$@' becomes 'arch'.
-$(DISTROS_SIMPLE):
-	@echo "--- Building $@:latest from $@.Dockerfile ---"
-	docker build \
-		-f $@.Dockerfile \
+$(ALL_DISTROS):
+	@echo "--- Building $@:latest ($(BUILD_TYPE)) ---"
+	docker build $(if $(LOAD),$(LOAD)) \
+		-f $@-$(DOCKERFILE_SUFFIX).Dockerfile \
 		-t $@:latest .
-	@echo "--- Built $@:latest from $@.Dockerfile ---"
+	@echo "--- Built $@:latest ($(BUILD_TYPE)) ---"
 
-# Convenience target to build all Gentoo variants at once.
+# Convenience target for Gentoo
 gentoo: $(DISTROS_GENTOO)
 
-# Specific rule for the Gentoo OpenRC variant (uses default build-args).
-gentoo-openrc:
-	@echo "--- Building gentoo:openrc from gentoo.Dockerfile ---"
-	docker build \
-		-f gentoo-openrc.Dockerfile \
-		-t gentoo:openrc .
-	@echo "--- Built gentoo:openrc from gentoo.Dockerfile ---"
-
-# Specific rule for the Gentoo Systemd variant.
-gentoo-systemd:
-	@echo "--- Building gentoo:systemd from gentoo.Dockerfile ---"
-	docker build \
-		-f gentoo-systemd.Dockerfile \
-		-t gentoo:systemd .
-	@echo "--- Built gentoo:systemd from gentoo.Dockerfile ---"
-
-# Specific rule for the Gentoo Musl variant.
-gentoo-musl:
-	@echo "--- Building gentoo:musl from gentoo.Dockerfile ---"
-	docker build \
-		-f gentoo-musl.Dockerfile \
-		-t gentoo:musl .
-	@echo "--- Built gentoo:musl from gentoo.Dockerfile ---"
-
 # --- Cleanup ---
-
-# Target to remove all images built by this Makefile.
 clean:
 	@echo "--- Removing all built container images ---"
-	docker rmi -f $(patsubst %,%:latest,$(DISTROS_SIMPLE)) gentoo:openrc gentoo:systemd gentoo:musl || true
+	docker rmi -f $(patsubst %,%:latest,$(ALL_DISTROS)) || true
