@@ -10,7 +10,7 @@ RUN echo "experimental-features = flakes nix-command" >> /etc/nix/nix.conf
 # Install basic kernel build dependencies via nix profile
 RUN nix profile install \
       nixpkgs#gcc \
-      nixpkgs#make \
+      nixpkgs#gnumake \
       nixpkgs#bc \
       nixpkgs#perl \
       nixpkgs#elfutils \
