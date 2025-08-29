@@ -38,7 +38,8 @@ RUN emerge --quiet --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-us
       sys-process/time \
       app-admin/sudo \
       dev-util/patchutils \
-      sys-process/tini
+      sys-process/tini \
+      app-portage/gentoolkit
       
 # Set home variables for root
 ENV HOME=/root \
