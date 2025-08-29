@@ -1,7 +1,7 @@
 FROM archlinux:base-devel AS root
 
 # Copy our base files
-COPY distro-files/arch/etc/environment /etc/evironment
+COPY distro-files/arch/etc/environment /etc/environment
 COPY distro-files/profile /etc/profile
 COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf
@@ -16,9 +16,9 @@ RUN pacman -Syy --needed --noconfirm --asexplicit aria2 curl reflector wget
 #RUN reflector --fastest 5 --verbose --protocol https,http --latest 5 --age 1 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Update and install base-devel and other needed packages
-RUN pacman -Syu --needed --noconfirm --asexplicit \
-        base-devel bash bc bison bzip2 ccache clang coreutils cpio dialog docbook-xsl dwarves flex gcc gettext git graphviz \
-        imagemagick inetutils initramfs kmod libbpf libelf lld llvm linux-firmware lz4 lzo mkinitcpio nano ncurses openssl \
+RUN pacman -Su --needed --noconfirm --asexplicit \
+        base-devel bash bc bison bzip2 ccache clang coreutils cpio dialog docbook-xsl flex gcc gettext git graphviz \
+        imagemagick inetutils kmod libbpf libelf lld llvm linux-firmware lz4 lzo mkinitcpio nano ncurses openssl \
         patchutils perl python python-sphinx python-sphinx_rtd_theme python-yaml rsync rust rust-bindgen rust-src schedtool \
         scx-scheds sudo tar texlive-latexextra time wget wireless-regdb xmlto xz zstd
 
