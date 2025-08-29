@@ -15,6 +15,14 @@ jobs:
         distro: [arch, debian, gentoo-openrc, gentoo-systemd, mint, nixos, fedora, popos, slackware, suse, ubuntu, void]
 
     steps:
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.ref_name }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
@@ -34,3 +42,9 @@ jobs:
           file: ${{ matrix.distro }}-base.Dockerfile
           push: true                    # Always push on manual run
           tags: ghcr.io/the-kernel-toolkit/tkt-${{ matrix.distro }}-dev:latest
+
+      - name: Move cache
+        if: always()
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
