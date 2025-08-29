@@ -48,5 +48,8 @@ jobs:
       - name: Move cache
         if: always()
         run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+            if [ -d /tmp/.buildx-cache-new ]; then
+                mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+            else
+                echo "Warning: /tmp/.buildx-cache-new not found, skipping cache move."
+            fi
