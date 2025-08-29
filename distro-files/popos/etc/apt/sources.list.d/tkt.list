@@ -4,7 +4,7 @@ deb [trusted=yes] http://apt.pop-os.org/proprietary    jammy main
 deb [trusted=yes] http://apt.pop-os.org/release-ubuntu  jammy main
 
 # Development / testing branches
-deb [arch=amd64] http://apt.pop-os.org/staging/master       jammy main
+deb [trusted=yes] http://apt.pop-os.org/staging/master       jammy main
 deb [trusted=yes] http://apt.pop-os.org/staging-proprietary           jammy main
 deb [trusted=yes] http://apt.pop-os.org/staging-ubuntu/master         jammy main
 
