@@ -1,12 +1,11 @@
-name: Build & Push TKT Dev Containers
+name: Build & Push TKT Dev Containers (Base)
 
 permissions:
   packages: write
   contents: read
 
 on:
-  branches:
-    - '**'          # any branch
+  workflow_dispatch:   # manual trigger only
 
 jobs:
   build:
@@ -28,10 +27,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and optionally push
+      - name: Build and push base image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ${{ matrix.distro }}-base.Dockerfile
-          push: ${{ github.event_name == 'schedule' }}
+          push: true                    # Always push on manual run
           tags: ghcr.io/the-kernel-toolkit/tkt-${{ matrix.distro }}-dev:latest

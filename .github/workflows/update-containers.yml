@@ -9,7 +9,7 @@ on:
     branches:
       - '**'          # any branch
   schedule:
-    - cron: '0 0 4 * *'  # four times a month (once a week)
+    - cron: '0 0 4 * *'  # every week (4 AM UTC, adjust as needed)
 
 jobs:
   build:
@@ -31,10 +31,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and optionally push
+      - name: Build and push updater image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ${{ matrix.distro }}-updater.Dockerfile
-          push: ${{ github.event_name == 'schedule' }}
+          push: true
           tags: ghcr.io/the-kernel-toolkit/tkt-${{ matrix.distro }}-dev:latest
