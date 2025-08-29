@@ -5,7 +5,7 @@ COPY distro-files/environment /etc/evironment
 COPY distro-files/profile /etc/profile
 COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf
-COPY distro-files/void//etc/xbps.d/00-repository-main.conf /etc/xbps.d/00-repository-main.conf
+COPY distro-files/void/etc/xbps.d/00-repository-main.conf /etc/xbps.d/00-repository-main.conf
 
 # Setup TKT configs
 RUN mkdir -p /github/home/.config
