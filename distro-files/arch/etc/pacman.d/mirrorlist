@@ -1,6 +1,3 @@
-Server = https://mirror.akane.network/archmirror/$repo/os/$arch
-Server = http://arlm.tyzoid.com/$repo/os/$arch
-Server = https://arlm.tyzoid.com/$repo/os/$arch
 Server = http://us.mirrors.cicku.me/archlinux/$repo/os/$arch
 Server = https://us.mirrors.cicku.me/archlinux/$repo/os/$arch
 Server = https://mirrors.mit.edu/archlinux/$repo/os/$arch
