@@ -19,7 +19,7 @@ RUN pacman -Syy --needed --noconfirm --asexplicit aria2 curl reflector wget
 # Update and install base-devel and other needed packages
 RUN pacman -Su --needed --noconfirm --asexplicit \
         base-devel bash bc bison bzip2 ccache clang coreutils cpio dialog docbook-xsl flex gcc gettext git graphviz \
-        imagemagick inetutils kmod libbpf libelf lld llvm linux-firmware lz4 lzo mkinitcpio nano ncurses openssl \
+        imagemagick inetutils kmod libbpf libelf lld llvm linux-firmware lz4 lzo lzop lrzip mkinitcpio nano ncurses openssl \
         patchutils perl python python-sphinx python-sphinx_rtd_theme python-yaml rsync rust rust-bindgen rust-src schedtool \
         scx-scheds sudo tar texlive-latexextra time wget wireless-regdb xmlto xz zstd
 
