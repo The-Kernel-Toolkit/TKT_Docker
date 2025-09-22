@@ -26,8 +26,12 @@ RUN echo "YES" | slackpkg update gpg && \
 RUN yes | slackpkg -batch=on -default_answer=y install \
     bash bc binutils bison brotli ccache clang cmake cpio curl cyrus-sasl diffutils dwarves elfutils fakeroot fakeroot-ng file flex gc gcc \
     gcc-g++ gcc-gcobol gcc-gdc gcc-gfortran gcc-gm2 gcc-gnat gcc-go gcc-objc gcc-rust git glibc guile gzip kernel-headers kmod libedit libelf \
-    libxml2 lld llvm lz4 lzop m4 make ncurses patchutils python3 python3-pip rsync schedtool spirv-llvm-translator \
+    libxml2 lld llvm lz4 m4 make ncurses patchutils python3 python3-pip rsync schedtool spirv-llvm-translator \
     sudo tar time wget xxHash xz zstd
+
+# Manually install lzop package
+RUN wget -O /var/cache/lzop.txz https://slackware.halpanet.org/slackdce/packages/15.0/x86_64/system/lzop/lzop-1.04-x86_64-1_slackdce.txz
+RUN upgradepkg --install-new /var/cache/lzop.txz
 
 # ldconfig because Slacklyfe
 RUN ldconfig
