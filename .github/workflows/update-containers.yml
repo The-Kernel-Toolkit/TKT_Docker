@@ -7,7 +7,7 @@ permissions:
 on:
   workflow_dispatch:   # manual trigger
   schedule:
-    - cron: '0 0 4 * *'  # every week (4 AM UTC, adjust as needed)
+    - cron: '0 0 0 * *'  # every week
 
 jobs:
   build:
