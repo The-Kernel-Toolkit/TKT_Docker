@@ -1,5 +1,5 @@
 # Pull latest Ubuntu container
-FROM ubuntu:oracular AS root
+FROM ubuntu:latest AS root
 
 # Copy over our files
 COPY distro-files/ubuntu/etc/environment /etc/evironment
@@ -7,7 +7,6 @@ COPY distro-files/profile /etc/profile
 COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf
 COPY distro-files/ubuntu/etc/apt/sources.list.d/plucky.list /etc/apt/sources.list.d/plucky.list
-COPY distro-files/ubuntu/etc/apt/sources.list.d/oracular.list /etc/apt/sources.list.d/oracular.list
 
 # Copy TKT GHCI configs
 COPY distro-files/GHCI.cfg /TKT.cfg.base
