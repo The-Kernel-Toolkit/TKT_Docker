@@ -1,5 +1,5 @@
 # Pull latest Ubuntu container
-FROM ubuntu:latest AS root
+FROM ubuntu:plucky AS root
 
 # Copy over our files
 COPY distro-files/ubuntu/etc/environment /etc/evironment
