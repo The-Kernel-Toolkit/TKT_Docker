@@ -16,7 +16,6 @@ RUN rm /TKT.cfg.distro /TKT.cfg.base
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get install -y wget gnupg lsb-release apt-utils tzdata dialog
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A6616109451BBBF2
 
 # Install Mint base bits + build tools
 RUN apt-get install -y \
