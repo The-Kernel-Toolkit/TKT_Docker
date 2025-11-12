@@ -1,4 +1,4 @@
-FROM linuxmintd/mint21-amd64 AS root
+FROM linuxmintd/lmde7-amd64 AS root
 
 # Copy our base files
 COPY distro-files/mint/etc/environment /etc/evironment
