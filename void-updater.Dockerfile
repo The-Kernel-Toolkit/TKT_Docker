@@ -2,7 +2,7 @@
 FROM ghcr.io/the-kernel-toolkit/tkt-void-dev:latest AS root
 
 # Update container
-RUN xbps-install -Suy && xbps-remove -O
+RUN xbps-install -Suy xbps && xbps-install -Suy && xbps-remove -O
 
 # Final command (login shell)
 ENTRYPOINT ["/usr/bin/tini", "--"]
