@@ -3,6 +3,7 @@ FROM ghcr.io/the-kernel-toolkit/tkt-gentoo-musl-dev:latest AS root
 
 # Update container
 RUN emerge --sync && \
+    emerge --update --newuse --deep --with-bdeps=y @world && \
     emerge --quiet --verbose --getbinpkg --usepkg --buildpkg --binpkg-respect-use=y --autounmask=y --autounmask-continue -uDN @world && \
     etc-update --automode -5 || true
 
