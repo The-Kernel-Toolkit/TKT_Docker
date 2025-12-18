@@ -17,7 +17,9 @@ RUN nix profile add \
       nixpkgs#ncurses \
       nixpkgs#xz \
       nixpkgs#bzip2 \
-      nixpkgs#cachix
+      nixpkgs#cachix \
+      nixpkgs#tini
 
 # Default command: drop into shell
+ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/bin/sh"]
