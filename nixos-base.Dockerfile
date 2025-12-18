@@ -18,7 +18,8 @@ RUN nix profile add \
       nixpkgs#xz \
       nixpkgs#bzip2 \
       nixpkgs#cachix \
-      nixpkgs#tini
+      nixpkgs#tini \
+      nixpkgs#lzop
 
 # Default command: drop into shell
 ENTRYPOINT ["/sbin/tini", "--"]
