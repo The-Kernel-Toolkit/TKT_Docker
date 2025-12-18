@@ -1,7 +1,7 @@
 FROM aclemons/slackware:current AS root
 
 # Copy our files
-COPY distro-files/slackware/etc/environment /etc/evironment
+COPY distro-files/slackware/etc/environment /etc/environment
 COPY distro-files/profile /etc/profile
 COPY distro-files/shells /etc/shells
 COPY distro-files/resolv.conf /etc/resolv.conf
@@ -26,7 +26,7 @@ RUN echo "YES" | slackpkg update gpg && \
 RUN yes | slackpkg -batch=on -default_answer=y install \
     bash bc binutils bison brotli ccache clang cmake cpio curl cyrus-sasl diffutils dwarves elfutils fakeroot fakeroot-ng file flex gc gcc \
     gcc-g++ gcc-gcobol gcc-gdc gcc-gfortran gcc-gm2 gcc-gnat gcc-go gcc-objc gcc-rust git glibc guile gzip kernel-headers kmod libedit libelf \
-    libxml2 lld llvm lz4 m4 make ncurses patchutils python3 python3-pip rsync schedtool spirv-llvm-translator \
+    libxml2 lld llvm lz4 lzo m4 make ncurses patchutils python3 python3-pip rsync schedtool spirv-llvm-translator \
     sudo tar time wget xxHash xz zstd
 
 # Manually install lzop package
